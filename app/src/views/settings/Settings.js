@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Text, StyleSheet } from 'react-native';
-import { testcolor } from '../../constants/colors';
+import colors from '../../constants/colors';
+
+const { testcolor } = colors;
 
 class Settings extends Component {
   render() {
-    return <Text style={styles.container}>qwe</Text>;
+    return <Text style={styles.container}>asdasd</Text>;
   }
 }
 
