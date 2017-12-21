@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { ImageBackground, StyleSheet } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 
 class Stories extends Component {
   render() {
     return (
-      <ImageBackground source={require('../../backgrounds/default.png')} style={styles.container} />
+      <Text style={styles.container}>asdsfsd</Text>
+      // <View style={styles.container}></View>
     );
   }
 }
