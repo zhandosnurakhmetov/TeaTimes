@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import colors from '../../constants/colors';
 
 const { testcolor } = colors;
 
 class Settings extends Component {
   render() {
-    return <Text style={styles.container}>asdasd</Text>;
+    return <View style={styles.container} />;
   }
 }
 
