@@ -1,3 +1,4 @@
 export default {
-  testcolor: 'orange'
+  testcolor: 'orange',
+  coverBorderColor: '#4E342E'
 };
