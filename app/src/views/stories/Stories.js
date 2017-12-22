@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
 import { ImageBackground, StyleSheet } from 'react-native';
-import BookCover from './BookCover';
+import BooksCollectionView from './BooksCollectionView';
 
 class Stories extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+    };
+  }
+
   render() {
     return (
       <ImageBackground source={require('../../backgrounds/default.png')} style={styles.container}>
-        <BookCover />
+          <BooksCollectionView />
       </ImageBackground>
 
     );
