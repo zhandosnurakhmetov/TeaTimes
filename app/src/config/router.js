@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import { Stories, DetailedStory, Settings, Player } from '../views';
 
@@ -22,15 +22,13 @@ const Router = TabNavigator(
     Stories: {
       screen: storiesStack,
       navigationOptions: {
-        tabBarIcon: ({ tintColor }) => <Icon name="ios-home-outline" size={30} color={tintColor} />
+        tabBarIcon: ({ tintColor }) => <Icon name="home" size={30} color={tintColor} />
       }
     },
     Settings: {
       screen: Settings,
       navigationOptions: {
-        tabBarIcon: ({ tintColor }) => (
-          <Icon name="ios-settings-outline" size={30} color={tintColor} />
-        )
+        tabBarIcon: ({ tintColor }) => <Icon name="settings" size={30} color={tintColor} />
       }
     }
   },
