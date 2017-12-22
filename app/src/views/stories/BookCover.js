@@ -4,7 +4,7 @@ import constants from '../../constants';
 
 const { colors, fontWeight } = constants;
 
-class Stories extends Component {
+class BookCover extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -28,19 +28,23 @@ const styles = StyleSheet.create({
     borderColor: colors.coverBorderColor,
     shadowColor: '#000000',
     shadowOffset: {
-      width: 0,
-      height: 8
+      width: 2,
+      height: 7
     },
     shadowRadius: 2,
-    shadowOpacity: 0.5,
+    shadowOpacity: 0.4,
+    marginBottom: 20,
+    marginTop: 10
   },
   title: {
     fontSize: 14,
     color: 'white',
     fontFamily: 'Avenir',
     fontWeight: fontWeight.roman,
-    textAlign: 'center'
+    textAlign: 'center',
+    paddingLeft: 5,
+    paddingRight: 5
   },
 });
 
-export default Stories;
+export default BookCover;
