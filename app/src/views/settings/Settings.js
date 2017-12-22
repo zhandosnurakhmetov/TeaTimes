@@ -27,27 +27,55 @@ class Settings extends Component {
           </View>
           <View style={styles.contentContainer}>
             <TableView>
-              <Section sectionTintColor="transparent">
+              <Section sectionTintColor="transparent" separatorTintColor={colors.light.secondary}>
                 <Cell
                   cellStyle="Basic"
                   title="Push Notifications"
-                  image={<Icon name="home" size={30} />}
-                  backgroundColor="pink"
-                  cellAccessoryView={<Switch onTintColor="orange" />}
+                  image={
+                    <Icon
+                      style={styles.icon}
+                      name="notifications"
+                      size={25}
+                      color={colors.light.icon}
+                    />
+                  }
+                  backgroundColor={colors.light.primary}
+                  titleTextColor={colors.light.text}
+                  cellAccessoryView={<Switch onTintColor={colors.light.switch} />}
                 />
               </Section>
-              <Section sectionTintColor="transparent">
+              <Section sectionTintColor="transparent" separatorTintColor={colors.light.secondary}>
                 <Cell
                   cellStyle="RightDetail"
                   title="Font size"
                   detail="14"
-                  image={<Icon name="home" size={30} />}
+                  image={
+                    <Icon
+                      style={styles.icon}
+                      name="format-size"
+                      size={25}
+                      color={colors.light.icon}
+                    />
+                  }
+                  backgroundColor={colors.light.primary}
+                  titleTextColor={colors.light.text}
+                  rightDetailColor={colors.light.text}
                 />
                 <Cell
                   cellStyle="RightDetail"
                   title="Theme"
                   detail="Light"
-                  image={<Icon name="home" size={30} />}
+                  image={
+                    <Icon
+                      style={styles.icon}
+                      name="format-paint"
+                      size={25}
+                      color={colors.light.icon}
+                    />
+                  }
+                  backgroundColor={colors.light.primary}
+                  titleTextColor={colors.light.text}
+                  rightDetailColor={colors.light.text}
                 />
               </Section>
             </TableView>
@@ -63,6 +91,7 @@ class Settings extends Component {
             <Button onPress={this.share} title="SHARE WITH FRIENDS" />
             <Button onPress={this.share} title="LEAVE A FEEDBACK" />
             <Button onPress={this.share} title="CONNECTION WITH AN AUTHOR" />
+            <Text style={styles.footerText}>Made in Kazakhstan!{'\n'}Version 1.0</Text>
           </View>
         </ScrollView>
       </ImageBackground>
@@ -87,10 +116,10 @@ const styles = StyleSheet.create({
   },
   title: {
     marginTop: 10,
-    color: 'red',
     fontFamily: 'Avenir',
     fontWeight: '800',
     fontSize: 20,
+    color: colors.light.text,
     backgroundColor: 'transparent'
   },
   appIcon: {
@@ -101,9 +130,25 @@ const styles = StyleSheet.create({
   },
   appTitle: {
     marginTop: 10,
+    marginBottom: 10,
+    fontFamily: 'Avenir',
     fontWeight: fontWeight.roman,
     fontSize: 15,
+    color: colors.light.text,
     backgroundColor: 'transparent'
+  },
+  footerText: {
+    marginTop: 50,
+    marginBottom: 20,
+    fontFamily: 'Avenir',
+    fontSize: 13,
+    fontWeight: fontWeight.light,
+    color: colors.light.text,
+    backgroundColor: 'transparent',
+    textAlign: 'center'
+  },
+  icon: {
+    marginTop: 4
   }
 });
 

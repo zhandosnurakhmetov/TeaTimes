@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Text, TouchableOpacity, View, StyleSheet } from 'react-native';
+import React from 'react';
+import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 import colors from '../../constants/colors';
 import fontWeight from '../../constants/fontWeight';
 
@@ -24,7 +24,8 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: 'Avenir',
     fontSize: 16,
-    fontWeight: fontWeight.medium
+    fontWeight: fontWeight.medium,
+    color: colors.light.text
   }
 });
 
