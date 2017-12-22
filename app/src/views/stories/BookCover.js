@@ -8,7 +8,7 @@ class Stories extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>The Fox and The Crow</Text>
+        <Text style={styles.title}>{this.props.item}</Text>
       </View>
     );
   }
@@ -18,6 +18,8 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
+    marginLeft: 10,
+    marginRight: 10,
     width: 80,
     height: 100,
     backgroundColor: '#6D4C41',
