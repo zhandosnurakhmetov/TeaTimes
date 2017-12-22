@@ -1,20 +1,24 @@
 import React, { Component } from 'react';
-import { ImageBackground, StyleSheet } from 'react-native';
+import { ImageBackground, StyleSheet, FlatList } from 'react-native';
 import BooksCollectionView from './BooksCollectionView';
 
 class Stories extends Component {
 
-  constructor(props) {
-    super(props);
+  state = {
+      data: ['Favorites', 'Love', 'Sincerity', 'Fidelity'],
+  };
 
-    this.state = {
-    };
-  }
+  renderItem = ({ item }) => <BooksCollectionView item={item} />
 
   render() {
     return (
       <ImageBackground source={require('../../backgrounds/default.png')} style={styles.container}>
-          <BooksCollectionView />
+          {/* <BooksCollectionView /> */}
+          <FlatList
+            data={this.state.data}
+            renderItem={this.renderItem}
+            keyExtractor={item => item}
+          />
       </ImageBackground>
 
     );
