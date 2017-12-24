@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import { ImageBackground, StyleSheet, FlatList } from 'react-native';
+import { ImageBackground, StyleSheet, FlatList, Text } from 'react-native';
+import { connect } from 'react-redux';
+
 import BooksCollectionView from './BooksCollectionView';
+
+import { fetchPosts } from '../../actions';
 
 class Stories extends Component {
 
-  state = {
-      data: ['Favorites', 'Love', 'Sincerity', 'Fidelity'],
-  };
-
-  componentDidMount() {
-
+  componentWillMount() {
+      this.props.fetchPosts();
   }
 
   renderItem = ({ item }) => <BooksCollectionView item={item} />
@@ -18,10 +18,11 @@ class Stories extends Component {
     return (
       <ImageBackground source={require('../../backgrounds/default.png')} style={styles.container}>
           <FlatList
-            data={this.state.data}
+            data={['Favorites', 'Love', 'Sincerity', 'Fidelity']}
             renderItem={this.renderItem}
             keyExtractor={item => item}
           />
+          <Text>{JSON.stringify(this.props.posts.post1)}</Text>
       </ImageBackground>
 
     );
@@ -34,4 +35,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Stories;
+function mapStateToProps(state) {
+  return {
+    posts: state.posts
+  };
+}
+
+export default connect(mapStateToProps, { fetchPosts })(Stories);
