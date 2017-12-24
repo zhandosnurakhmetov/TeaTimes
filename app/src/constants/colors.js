@@ -8,7 +8,8 @@ export default {
     primary: '#D7CCC8',
     secondary: '#979797',
     switch: '#6D4C41',
-    track: '#D7CCC8'
+    slider: '#D7CCC8',
+    sliderHandler: '#6D4C41'
   },
   dark: {
     cover: { story: '#EEEEEE', fable: '#BFBFBF' },
@@ -19,7 +20,8 @@ export default {
     primary: '#53535B',
     secondary: '#979797',
     switch: '#BFBFBF',
-    track: '#EEEEEE'
+    slider: '#EEEEEE',
+    sliderHandler: '#949494'
   },
   clean: {
     cover: { story: '#DF5A48', fable: '#E27A3F' },
@@ -30,7 +32,8 @@ export default {
     primary: '#D4D4D4',
     secondary: '#979797',
     switch: '#DF5A48',
-    track: '#D7CCC8'
+    slider: '#D7CCC8',
+    sliderHandler: '#6D4C41'
   },
   indigo: {
     cover: { story: '#00A8E8', fable: '#0567BC' },
@@ -41,6 +44,7 @@ export default {
     primary: '#00171F',
     secondary: '#979797',
     switch: '#0567BC',
-    track: '#EEEEEE'
+    slider: '#EEEEEE',
+    sliderHandler: '#BFBFBF'
   }
 };
