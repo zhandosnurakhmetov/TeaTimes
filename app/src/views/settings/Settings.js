@@ -1,15 +1,7 @@
 import React, { Component } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {
-  Text,
-  TouchableOpacity,
-  View,
-  Image,
-  ImageBackground,
-  StyleSheet,
-  ScrollView,
-  Switch
-} from 'react-native';
+import { Text, View, Image, ImageBackground, StyleSheet, ScrollView, Switch } from 'react-native';
+import * as firebase from 'firebase';
 import { Cell, Section, TableView } from 'react-native-tableview-simple';
 import colors from '../../constants/colors';
 import fontWeight from '../../constants/fontWeight';
@@ -18,6 +10,8 @@ import Button from './Button';
 class Settings extends Component {
   share() {}
 
+  componentDidMount() {}
+
   render() {
     return (
       <ImageBackground source={require('../../backgrounds/default.png')} style={styles.container}>
@@ -25,7 +19,7 @@ class Settings extends Component {
           <View style={styles.headerContainer}>
             <Text style={styles.title}>SETTINGS</Text>
           </View>
-          <View style={styles.contentContainer}>
+          <View>
             <TableView>
               <Section sectionTintColor="transparent" separatorTintColor={colors.light.secondary}>
                 <Cell
@@ -104,14 +98,9 @@ const styles = StyleSheet.create({
     flex: 1
   },
   headerContainer: {
-    flex: 1,
     alignItems: 'center'
   },
-  contentContainer: {
-    flex: 4
-  },
   footerContainer: {
-    flex: 5,
     alignItems: 'center'
   },
   title: {
