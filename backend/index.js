@@ -18,7 +18,6 @@ var api = new ParseServer({
   serverURL: serverURL,
 });
 
-var allowInsecureHTTP = true;
 var dashboard = new ParseDashboard(
   {
     apps: [
@@ -37,7 +36,7 @@ var dashboard = new ParseDashboard(
       },
     ],
   },
-  allowInsecureHTTP,
+  { allowInsecureHTTP: true },
 );
 
 var app = express();
