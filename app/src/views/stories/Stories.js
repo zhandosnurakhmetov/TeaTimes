@@ -8,12 +8,15 @@ class Stories extends Component {
       data: ['Favorites', 'Love', 'Sincerity', 'Fidelity'],
   };
 
+  componentDidMount() {
+
+  }
+
   renderItem = ({ item }) => <BooksCollectionView item={item} />
 
   render() {
     return (
       <ImageBackground source={require('../../backgrounds/default.png')} style={styles.container}>
-          {/* <BooksCollectionView /> */}
           <FlatList
             data={this.state.data}
             renderItem={this.renderItem}
