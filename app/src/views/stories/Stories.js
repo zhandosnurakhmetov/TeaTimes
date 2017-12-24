@@ -7,24 +7,22 @@ import BooksCollectionView from './BooksCollectionView';
 import { fetchPosts } from '../../actions';
 
 class Stories extends Component {
-
   componentWillMount() {
-      this.props.fetchPosts();
+    this.props.fetchPosts();
   }
 
-  renderItem = ({ item }) => <BooksCollectionView item={item} />
+  renderItem = ({ item }) => <BooksCollectionView item={item} />;
 
   render() {
     return (
-      <ImageBackground source={require('../../backgrounds/default.png')} style={styles.container}>
-          <FlatList
-            data={['Favorites', 'Love', 'Sincerity', 'Fidelity']}
-            renderItem={this.renderItem}
-            keyExtractor={item => item}
-          />
-          <Text>{JSON.stringify(this.props.posts)}</Text>
+      <ImageBackground source={require('../../backgrounds/light.png')} style={styles.container}>
+        <FlatList
+          data={['Favorites', 'Love', 'Sincerity', 'Fidelity']}
+          renderItem={this.renderItem}
+          keyExtractor={item => item}
+        />
+        <Text>{JSON.stringify(this.props.posts.post1)}</Text>
       </ImageBackground>
-
     );
   }
 }
