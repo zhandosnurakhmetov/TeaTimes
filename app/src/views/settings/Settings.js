@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Text, View, Image, ImageBackground, StyleSheet, ScrollView, Switch } from 'react-native';
+import * as firebase from 'firebase';
 import { Cell, Section, TableView } from 'react-native-tableview-simple';
 import colors from '../../constants/colors';
 import fontWeight from '../../constants/fontWeight';
@@ -8,6 +9,8 @@ import Button from './Button';
 
 class Settings extends Component {
   share() {}
+
+  componentDidMount() {}
 
   render() {
     return (
