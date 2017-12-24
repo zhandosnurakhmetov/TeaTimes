@@ -27,7 +27,7 @@ class Player extends Component {
 
   render() {
     return (
-      <ImageBackground source={require('../../backgrounds/default.png')} style={styles.container}>
+      <ImageBackground source={require('../../backgrounds/light.png')} style={styles.container}>
         <View style={styles.headerContainer}>
           <TouchableOpacity onPress={this.close}>
             <Icon name="expand-more" size={35} color={colors.light.icon} />
