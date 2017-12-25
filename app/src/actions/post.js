@@ -6,7 +6,15 @@ export function fetchPosts() {
     const posts = firebase.database().ref('/posts');
     posts.on('value', (snapshot) => {
       console.log(snapshot);
-      dispatch({ type: FETCH_POSTS, posts: snapshot.val() });
+
+      const array = [];
+      const results = snapshot.val();
+
+      for (const element in results ) {
+        array.push(results[element]);
+      }
+
+      dispatch({ type: FETCH_POSTS, posts: array });
     });
   };
 

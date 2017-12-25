@@ -21,7 +21,7 @@ class Stories extends Component {
           renderItem={this.renderItem}
           keyExtractor={item => item}
         />
-        <Text>{JSON.stringify(this.props.posts.post1)}</Text>
+        <Text>{JSON.stringify(this.props.posts)}</Text>
       </ImageBackground>
     );
   }
