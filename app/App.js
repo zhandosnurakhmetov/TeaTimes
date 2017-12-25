@@ -31,9 +31,10 @@ const configureStore = () => {
       const store = createStore(reducers, initialState, applyMiddleware(...middlewares));
       store.subscribe(
         throttle(() => {
-          const { theme } = store.getState();
+          const { theme, textSize } = store.getState();
           const state = JSON.stringify({
-            theme
+            theme,
+            textSize
           });
           AsyncStorage.setItem(STORE_KEY_NAME, state).then(() => {});
         }, 1000)

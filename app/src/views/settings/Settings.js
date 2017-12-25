@@ -6,13 +6,28 @@ import Picker from 'react-native-picker';
 import { connect } from 'react-redux';
 import constants from '../../constants';
 import Button from './Button';
-import { changeTheme } from '../../actions';
+import { changeTheme, changeTextSize } from '../../actions';
 import { capitalizeFirstLetter } from '../../utils/StringHelper';
 
 const { colors, fontWeight, background } = constants;
 
 class Settings extends Component {
   share() {}
+
+  selectTextSize() {
+    const data = [12, 14, 16, 18, 20, 22, 24];
+    Picker.init({
+      pickerTitleText: 'Text size',
+      pickerConfirmBtnText: 'Confirm',
+      pickerCancelBtnText: 'Cancel',
+      pickerData: data,
+      selectedValue: [this.props.textSize],
+      onPickerConfirm: selectedTextSize => {
+        this.props.changeTextSize(selectedTextSize[0]);
+      }
+    });
+    Picker.show();
+  }
 
   selectTheme() {
     const data = ['light', 'dark', 'clean', 'indigo'];
@@ -68,7 +83,7 @@ class Settings extends Component {
                 <Cell
                   cellStyle="RightDetail"
                   title="Text size"
-                  detail="14"
+                  detail={this.props.textSize}
                   image={
                     <Icon
                       style={styles(this.props.theme).icon}
@@ -80,6 +95,7 @@ class Settings extends Component {
                   backgroundColor={colors[this.props.theme].primary}
                   titleTextColor={colors[this.props.theme].text}
                   rightDetailColor={colors[this.props.theme].text}
+                  onPress={this.selectTextSize.bind(this)}
                 />
                 <Cell
                   cellStyle="RightDetail"
@@ -185,8 +201,9 @@ const styles = currentTheme =>
 
 function mapStateToProps(state) {
   return {
-    theme: state.theme
+    theme: state.theme,
+    textSize: state.textSize
   };
 }
 
-export default connect(mapStateToProps, { changeTheme })(Settings);
+export default connect(mapStateToProps, { changeTheme, changeTextSize })(Settings);
