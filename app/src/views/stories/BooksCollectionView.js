@@ -2,21 +2,15 @@ import React, { Component } from 'react';
 import { FlatList, View, Text, StyleSheet } from 'react-native';
 import BookCover from './BookCover';
 
-class BooksCollectionView extends Component {
-  state = {
-      data: ['The Fox and The Crow', 'The Tortoise and the Hare', 'A dog is A Dog', 'A House'],
-  };
-
+const BooksCollectionView = ({ type, books }) => {
   renderItem = ({ item }) => <BookCover item={item} />
-
-  render() {
     return (
       <View>
-        <Text style={styles.title}>{this.props.item}</Text>
+        <Text style={styles.title}>{type}</Text>
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
-          data={this.state.data}
+          data={books.map(book => book.title)}
           renderItem={this.renderItem}
           keyExtractor={item => item}
         />
@@ -24,7 +18,7 @@ class BooksCollectionView extends Component {
       </View>
     );
   }
-}
+
 
 const styles = StyleSheet.create({
   seperator: {

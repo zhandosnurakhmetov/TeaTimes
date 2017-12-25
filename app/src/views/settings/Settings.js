@@ -1,26 +1,32 @@
 import React, { Component } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {
-  Text,
-  View,
-  Image,
-  ImageBackground,
-  StyleSheet,
-  ScrollView,
-  Switch,
-  TouchableOpacity
-} from 'react-native';
+import { Text, View, Image, ImageBackground, StyleSheet, ScrollView, Switch } from 'react-native';
 import { Cell, Section, TableView } from 'react-native-tableview-simple';
+import Picker from 'react-native-picker';
 import { connect } from 'react-redux';
 import constants from '../../constants';
 import Button from './Button';
 import { changeTheme } from '../../actions';
+import { capitalizeFirstLetter } from '../../utils/StringHelper';
 
-const { colors, fontWeight, theme, background } = constants;
+const { colors, fontWeight, background } = constants;
 
 class Settings extends Component {
-  share() {
-    this.props.changeTheme(theme.dark);
+  share() {}
+
+  selectTheme() {
+    const data = ['light', 'dark', 'clean', 'indigo'];
+    Picker.init({
+      pickerTitleText: 'Theme',
+      pickerConfirmBtnText: 'Confirm',
+      pickerCancelBtnText: 'Cancel',
+      pickerData: data.map(capitalizeFirstLetter),
+      selectedValue: [capitalizeFirstLetter(this.props.theme)],
+      onPickerConfirm: selectedTheme => {
+        this.props.changeTheme(selectedTheme[0].toLowerCase());
+      }
+    });
+    Picker.show();
   }
 
   render() {
@@ -61,7 +67,7 @@ class Settings extends Component {
               >
                 <Cell
                   cellStyle="RightDetail"
-                  title="Font size"
+                  title="Text size"
                   detail="14"
                   image={
                     <Icon
@@ -78,7 +84,7 @@ class Settings extends Component {
                 <Cell
                   cellStyle="RightDetail"
                   title="Theme"
-                  detail="Light"
+                  detail={capitalizeFirstLetter(this.props.theme)}
                   image={
                     <Icon
                       style={styles(this.props.theme).icon}
@@ -90,6 +96,7 @@ class Settings extends Component {
                   backgroundColor={colors[this.props.theme].primary}
                   titleTextColor={colors[this.props.theme].text}
                   rightDetailColor={colors[this.props.theme].text}
+                  onPress={this.selectTheme.bind(this)}
                 />
               </Section>
             </TableView>
