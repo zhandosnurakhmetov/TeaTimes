@@ -8,9 +8,13 @@
   },
   "dependencies": {
     "firebase": "^4.8.1",
+    "lodash": "^4.17.4",
     "react": "16.0.0",
     "react-native": "0.51.0",
+    "react-native-mail": "^3.0.5",
     "react-native-picker": "^4.3.2",
+    "react-native-rate": "^1.0.5",
+    "react-native-share": "^1.0.23",
     "react-native-tableview-simple": "^0.17.1",
     "react-native-vector-icons": "^4.4.3",
     "react-navigation": "^1.0.0-beta.22",

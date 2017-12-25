@@ -1,18 +1,93 @@
 import React, { Component } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Text, View, Image, ImageBackground, StyleSheet, ScrollView, Switch } from 'react-native';
+
+import {
+  Alert,
+  Text,
+  View,
+  Image,
+  ImageBackground,
+  StyleSheet,
+  ScrollView,
+  Switch
+} from 'react-native';
 import { Cell, Section, TableView } from 'react-native-tableview-simple';
 import Picker from 'react-native-picker';
 import { connect } from 'react-redux';
+// import * as firebase from 'firebase';
+import Share from 'react-native-share';
+import Rate from 'react-native-rate';
+import Mailer from 'react-native-mail';
 import constants from '../../constants';
 import Button from './Button';
-import { changeTheme } from '../../actions';
+import { changeTheme, changeTextSize } from '../../actions';
 import { capitalizeFirstLetter } from '../../utils/StringHelper';
 
 const { colors, fontWeight, background } = constants;
 
 class Settings extends Component {
-  share() {}
+  share() {
+    const options = {
+      message: 'Read interesting stories in english',
+      url: 'https://facebook.github.io/react-native/'
+    };
+    Share.open(options).catch(err => {
+      if (err) console.log(err);
+    });
+    // const postData = {
+    //   title: 'Some title',
+    //   type: 'Love',
+    //   subtype: 'Poem',
+    //   text: 'Some text about love'
+    // };
+    // const newPostKey = firebase
+    //   .database()
+    //   .ref()
+    //   .child('posts')
+    //   .push().key;
+    // const updates = {};
+    // updates[`/posts/${newPostKey}`] = postData;
+    // return firebase
+    //   .database()
+    //   .ref()
+    //   .update(updates);
+  }
+
+  rate() {
+    const options = {
+      AppleAppID: '447188370',
+      GooglePackageName: 'com.snapchat.android',
+      preferInApp: true
+    };
+    Rate.rate(options, () => {});
+  }
+
+  sendEmail = () => {
+    Mailer.mail(
+      {
+        subject: 'Connecting through mobile application',
+        recipients: ['malikaburakoja@gmail.com'],
+        body: 'Hello Malika!',
+        isHTML: false
+      },
+      () => {}
+    );
+  };
+
+  selectTextSize() {
+    const data = [12, 14, 16, 18, 20, 22, 24];
+    Picker.init({
+      pickerTitleText: 'Text size',
+      pickerConfirmBtnText: 'Confirm',
+      pickerCancelBtnText: 'Cancel',
+      pickerData: data,
+      selectedValue: [this.props.textSize],
+      onPickerConfirm: selectedTextSize => {
+        this.props.changeTextSize(selectedTextSize[0]);
+      }
+    });
+    Picker.show();
+  }
 
   selectTheme() {
     const data = ['light', 'dark', 'clean', 'indigo'];
@@ -68,7 +143,7 @@ class Settings extends Component {
                 <Cell
                   cellStyle="RightDetail"
                   title="Text size"
-                  detail="14"
+                  detail={this.props.textSize}
                   image={
                     <Icon
                       style={styles(this.props.theme).icon}
@@ -80,6 +155,7 @@ class Settings extends Component {
                   backgroundColor={colors[this.props.theme].primary}
                   titleTextColor={colors[this.props.theme].text}
                   rightDetailColor={colors[this.props.theme].text}
+                  onPress={this.selectTextSize.bind(this)}
                 />
                 <Cell
                   cellStyle="RightDetail"
@@ -115,12 +191,12 @@ class Settings extends Component {
               currentTheme={this.props.theme}
             />
             <Button
-              onPress={this.share.bind(this)}
+              onPress={this.rate.bind(this)}
               title="LEAVE A FEEDBACK"
               currentTheme={this.props.theme}
             />
             <Button
-              onPress={this.share.bind(this)}
+              onPress={this.sendEmail.bind(this)}
               title="CONNECTION WITH AN AUTHOR"
               currentTheme={this.props.theme}
             />
@@ -185,8 +261,9 @@ const styles = currentTheme =>
 
 function mapStateToProps(state) {
   return {
-    theme: state.theme
+    theme: state.theme,
+    textSize: state.textSize
   };
 }
 
-export default connect(mapStateToProps, { changeTheme })(Settings);
+export default connect(mapStateToProps, { changeTheme, changeTextSize })(Settings);

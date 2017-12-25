@@ -14,7 +14,6 @@ class Stories extends Component {
   renderItem = ({ item } ) => {
     const { posts } = this.props;
     const arr = posts.filter(post => post.type === item)[0].value;
-    console.log('1', arr);
     return (<BooksCollectionView type={item} books={arr} />);
   }
 

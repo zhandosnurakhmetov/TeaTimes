@@ -1,2 +1,3 @@
 export const FETCH_POSTS = 'FETCH_POSTS';
 export const CHANGE_THEME = 'CHANGE_THEME';
+export const CHANGE_TEXT_SIZE = 'CHANGE_TEXT_SIZE';
