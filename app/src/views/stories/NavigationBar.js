@@ -6,12 +6,17 @@ import constants from '../../constants';
 const { fontWeight } = constants;
 
 class NavigationBar extends Component {
+  dissmiss = () => {
+    const { navigation } = this.props;
+    navigation.goBack();
+  };
+
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.leftContainer}>
+        <TouchableOpacity style={styles.leftContainer} onPress={this.dissmiss}>
           <Icon name="keyboard-arrow-left" size={40} />
-        </View>
+        </TouchableOpacity>
         <View style={styles.rightContainer}>
           <TouchableOpacity>
             <Text style={styles.language}>EN</Text>
