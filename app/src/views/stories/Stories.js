@@ -1,27 +1,33 @@
 import React, { Component } from 'react';
 import { ImageBackground, StyleSheet, FlatList, Text } from 'react-native';
 import { connect } from 'react-redux';
-
 import BooksCollectionView from './BooksCollectionView';
-
 import { fetchPosts } from '../../actions';
 
 class Stories extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.fetchPosts();
   }
 
-  renderItem = ({ item }) => <BooksCollectionView item={item} />;
+  renderItem = ({ item }) => {
+    const { posts, navigation } = this.props;
+    const arr = posts.filter(post => post.type === item)[0].value;
+    return <BooksCollectionView type={item} books={arr} navigation={navigation} />;
+  };
 
   render() {
+    const { posts } = this.props;
+    if (posts.length === 0) {
+      return <Text style={styles.loader}>Loading...</Text>;
+    }
+
     return (
       <ImageBackground source={require('../../backgrounds/light.png')} style={styles.container}>
         <FlatList
-          data={['Favorites', 'Love', 'Sincerity', 'Fidelity']}
+          data={posts.map(item => item.type)}
           renderItem={this.renderItem}
           keyExtractor={item => item}
         />
-        <Text>{JSON.stringify(this.props.posts.post1)}</Text>
       </ImageBackground>
     );
   }

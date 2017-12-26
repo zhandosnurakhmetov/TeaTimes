@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 import constants from '../../constants';
 
 const { colors, fontWeight } = constants;
 
 class BookCover extends Component {
+  didSelectItem = () => {
+    const { book } = this.props;
+    this.props.navigation.navigate('DetailedStory', { ...book });
+  };
+
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.title}>{this.props.item}</Text>
-      </View>
+      <TouchableOpacity style={styles.container} onPress={this.didSelectItem}>
+        <Text style={styles.title}>{this.props.book.title}</Text>
+      </TouchableOpacity>
     );
   }
 }
@@ -44,7 +49,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingLeft: 5,
     paddingRight: 5
-  },
+  }
 });
 
 export default BookCover;
