@@ -7,27 +7,27 @@ import PlayerManager from './PlayerManager';
 
 class Player extends Component {
   close() {}
-  replay() {
-    PlayerManager.play();
+  backward() {
+    PlayerManager.getInstance().backward();
   }
   forward() {
-    PlayerManager.play(
-      'https://firebasestorage.googleapis.com/v0/b/teatimes-8d7cd.appspot.com/o/test2.mp3?alt=media&token=d4900315-2673-4e46-803d-f49da9d422d2'
-    );
+    PlayerManager.getInstance().forward();
   }
   play() {
-    PlayerManager.setBook(
+    PlayerManager.getInstance().setBook(
       {
         title: 'Test',
         audio:
           'https://firebasestorage.googleapis.com/v0/b/teatimes-8d7cd.appspot.com/o/test.mp3?alt=media&token=f445738e-c9ec-49bf-8a2c-b8208b9ed30d'
       },
       () => {
-        PlayerManager.play();
+        PlayerManager.getInstance().play();
       }
     );
   }
-  speed() {}
+  speed() {
+    PlayerManager.getInstance().speed();
+  }
   share() {}
   download() {}
   slide() {}
@@ -58,7 +58,7 @@ class Player extends Component {
           </View>
         </View>
         <View style={styles.playerContainer}>
-          <TouchableOpacity onPress={this.replay}>
+          <TouchableOpacity onPress={this.backward}>
             <Icon name="replay-5" size={60} color={colors.light.icon} />
           </TouchableOpacity>
           <TouchableOpacity onPress={this.play}>
