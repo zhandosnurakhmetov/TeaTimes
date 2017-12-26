@@ -11,14 +11,18 @@ class Stories extends Component {
     this.props.fetchPosts();
   }
 
-  renderItem = ({ item } ) => {
+  renderItem = ({ item }) => {
     const { posts } = this.props;
     const arr = posts.filter(post => post.type === item)[0].value;
-    return (<BooksCollectionView type={item} books={arr} />);
-  }
+    return <BooksCollectionView type={item} books={arr} />;
+  };
 
   render() {
     const { posts } = this.props;
+    if (posts.length === 0) {
+      return <Text style={styles.loader}>Loading...</Text>;
+    }
+
     return (
       <ImageBackground source={require('../../backgrounds/light.png')} style={styles.container}>
         <FlatList
@@ -26,7 +30,6 @@ class Stories extends Component {
           renderItem={this.renderItem}
           keyExtractor={item => item}
         />
-        {/* <Text>{JSON.stringify(posts)}</Text> */}
       </ImageBackground>
     );
   }
