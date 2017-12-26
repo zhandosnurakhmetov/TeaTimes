@@ -1,14 +1,28 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import ActionSheet from 'react-native-actionsheet-native';
 import constants from '../../constants';
 
 const { fontWeight } = constants;
+const options = ['English', 'Turkish', 'Russian', 'Kazakh', 'Cancel'];
 
 class NavigationBar extends Component {
   dissmiss = () => {
     const { navigation } = this.props;
     navigation.goBack();
+  };
+
+  changeLanguage = () => {
+    ActionSheet.showActionSheetWithOptions(
+      {
+        options,
+        cancelButtonIndex: 4
+      },
+      buttonIndex => {
+        console.log(options[buttonIndex]);
+      }
+    );
   };
 
   render() {
@@ -18,7 +32,7 @@ class NavigationBar extends Component {
           <Icon name="keyboard-arrow-left" size={40} />
         </TouchableOpacity>
         <View style={styles.rightContainer}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={this.changeLanguage}>
             <Text style={styles.language}>EN</Text>
           </TouchableOpacity>
           <Icon name="share" style={styles.icon} size={25} />

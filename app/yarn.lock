@@ -4225,6 +4225,10 @@ react-native:
     xmldoc "^0.4.0"
     yargs "^9.0.0"
 
+react-native-actionsheet-native@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-actionsheet-native/-/react-native-actionsheet-native-0.0.2.tgz#245cd4e3ed8291155b26693d58ac788ebb5dd1a6"
+
 react-native-dismiss-keyboard@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/react-native-dismiss-keyboard/-/react-native-dismiss-keyboard-1.0.0.tgz#32886242b3f2317e121f3aeb9b0a585e2b879b49"
