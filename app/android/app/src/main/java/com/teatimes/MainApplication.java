@@ -3,6 +3,7 @@ package com.teatimes;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.zmxv.RNSound.RNSoundPackage;
 import com.chirag.RNMail.RNMail;
 import com.reactlibrary.RNRatePackage;
 import cl.json.RNSharePackage;
@@ -28,6 +29,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNSoundPackage(),
             new RNMail(),
             new RNRatePackage(),
             new RNSharePackage(),

@@ -30,6 +30,12 @@ const Router = TabNavigator(
       navigationOptions: {
         tabBarIcon: ({ tintColor }) => <Icon name="settings" size={30} color={tintColor} />
       }
+    },
+    Player: {
+      screen: Player,
+      navigationOptions: {
+        tabBarIcon: ({ tintColor }) => <Icon name="settings" size={30} color={tintColor} />
+      }
     }
   },
   {

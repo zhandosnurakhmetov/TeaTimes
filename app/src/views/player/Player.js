@@ -1,25 +1,32 @@
 import React, { Component } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {
-  Text,
-  TouchableOpacity,
-  View,
-  Image,
-  ImageBackground,
-  StyleSheet,
-  ScrollView,
-  Switch
-} from 'react-native';
-import { Cell, Section, TableView } from 'react-native-tableview-simple';
+import { Text, TouchableOpacity, View, ImageBackground, StyleSheet } from 'react-native';
 import colors from '../../constants/colors';
 import fontWeight from '../../constants/fontWeight';
-import { drawBorder, DebugDiv } from '../../utils/DebugBorder';
+import PlayerManager from './PlayerManager';
 
 class Player extends Component {
   close() {}
-  replay() {}
-  forware() {}
-  play() {}
+  replay() {
+    PlayerManager.play();
+  }
+  forward() {
+    PlayerManager.play(
+      'https://firebasestorage.googleapis.com/v0/b/teatimes-8d7cd.appspot.com/o/test2.mp3?alt=media&token=d4900315-2673-4e46-803d-f49da9d422d2'
+    );
+  }
+  play() {
+    PlayerManager.setBook(
+      {
+        title: 'Test',
+        audio:
+          'https://firebasestorage.googleapis.com/v0/b/teatimes-8d7cd.appspot.com/o/test.mp3?alt=media&token=f445738e-c9ec-49bf-8a2c-b8208b9ed30d'
+      },
+      () => {
+        PlayerManager.play();
+      }
+    );
+  }
   speed() {}
   share() {}
   download() {}
