@@ -6,7 +6,8 @@ const { colors, fontWeight } = constants;
 
 class BookCover extends Component {
   didSelectItem = () => {
-    console.log(this.props.item);
+    const { item } = this.props;
+    console.log(item);
   };
 
   render() {

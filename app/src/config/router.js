@@ -6,10 +6,10 @@ import { Stories, DetailedStory, Settings, Player } from '../views';
 const storiesStack = StackNavigator(
   {
     Stories: {
-      screen: Stories
+      screen: DetailedStory
     },
     DetailedStory: {
-      screen: Stories
+      screen: DetailedStory
     }
   },
   {
