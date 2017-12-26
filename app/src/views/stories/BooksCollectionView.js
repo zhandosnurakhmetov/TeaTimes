@@ -2,23 +2,27 @@ import React, { Component } from 'react';
 import { FlatList, View, Text, StyleSheet } from 'react-native';
 import BookCover from './BookCover';
 
-const BooksCollectionView = ({ type, books }) => {
-  renderItem = ({ item }) => <BookCover item={item} />;
+class BooksCollectionView extends Component {
+  renderItem = ({ item }) => <BookCover book={item} navigation={this.props.navigation} />;
 
-  return (
-    <View>
-      <Text style={styles.title}>{type}</Text>
-      <FlatList
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        data={books.map(book => book.title)}
-        renderItem={this.renderItem}
-        keyExtractor={item => item}
-      />
-      <View style={styles.seperator} />
-    </View>
-  );
-};
+  render() {
+    const { type, books } = this.props;
+
+    return (
+      <View>
+        <Text style={styles.title}>{type}</Text>
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={books}
+          renderItem={this.renderItem}
+          keyExtractor={item => item.title}
+        />
+        <View style={styles.seperator} />
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   seperator: {

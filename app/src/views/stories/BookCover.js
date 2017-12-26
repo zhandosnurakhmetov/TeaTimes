@@ -6,14 +6,14 @@ const { colors, fontWeight } = constants;
 
 class BookCover extends Component {
   didSelectItem = () => {
-    const { item } = this.props;
-    console.log(item);
+    const { book } = this.props;
+    this.props.navigation.navigate('DetailedStory', { ...book });
   };
 
   render() {
     return (
       <TouchableOpacity style={styles.container} onPress={this.didSelectItem}>
-        <Text style={styles.title}>{this.props.item}</Text>
+        <Text style={styles.title}>{this.props.book.title}</Text>
       </TouchableOpacity>
     );
   }

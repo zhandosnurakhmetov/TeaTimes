@@ -1,12 +1,12 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { TabNavigator, StackNavigator } from 'react-navigation';
-import { Stories, DetailedStory, Settings, Player } from '../views';
+import { Stories, DetailedStory, Settings } from '../views';
 
 const storiesStack = StackNavigator(
   {
     Stories: {
-      screen: DetailedStory
+      screen: Stories
     },
     DetailedStory: {
       screen: DetailedStory

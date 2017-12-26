@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { ImageBackground, StyleSheet, FlatList, Text } from 'react-native';
 import { connect } from 'react-redux';
-
 import BooksCollectionView from './BooksCollectionView';
-
 import { fetchPosts } from '../../actions';
 
 class Stories extends Component {
@@ -12,9 +10,9 @@ class Stories extends Component {
   }
 
   renderItem = ({ item }) => {
-    const { posts } = this.props;
+    const { posts, navigation } = this.props;
     const arr = posts.filter(post => post.type === item)[0].value;
-    return <BooksCollectionView type={item} books={arr} />;
+    return <BooksCollectionView type={item} books={arr} navigation={navigation} />;
   };
 
   render() {
