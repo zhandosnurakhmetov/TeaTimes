@@ -3,6 +3,7 @@ import { ImageBackground, StyleSheet, Text, ScrollView } from 'react-native';
 
 import constants from '../../constants';
 import AudioPlayer from './AudioPlayer';
+import NavigationBar from './NavigationBar';
 
 const { fontWeight } = constants;
 
@@ -12,6 +13,7 @@ export default class DetailedStory extends Component {
 
     return (
       <ImageBackground source={require('../../backgrounds/light.png')} style={styles.container}>
+        <NavigationBar />
         <ScrollView>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.text}>{text}</Text>
