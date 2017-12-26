@@ -1,10 +1,10 @@
-import { FETCH_POSTS } from '../actions/types';
+import { FETCH_POSTS, BOOKMARK_PRESSED } from '../actions/types';
 
 export default (state = [], action) => {
   switch (action.type) {
-  case FETCH_POSTS:
-    return action.posts;
-  default:
-    return state;
+    case FETCH_POSTS:
+      return action.posts;
+    default:
+      return state;
   }
 };

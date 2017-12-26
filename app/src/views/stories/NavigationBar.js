@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ActionSheet from 'react-native-actionsheet-native';
 import constants from '../../constants';
+import { bookmarkPressed } from '../../actions';
 
 const { fontWeight } = constants;
 const options = ['English', 'Turkish', 'Russian', 'Kazakh', 'Cancel'];
@@ -14,6 +16,7 @@ class NavigationBar extends Component {
   };
 
   changeLanguage = () => {
+    // FIXME: Transfer to actions.
     ActionSheet.showActionSheetWithOptions(
       {
         options,
@@ -26,6 +29,7 @@ class NavigationBar extends Component {
   };
 
   render() {
+    console.log(this.props.isBookmarkSelected, 'state');
     return (
       <View style={styles.container}>
         <TouchableOpacity style={styles.leftContainer} onPress={this.dissmiss}>
@@ -36,7 +40,15 @@ class NavigationBar extends Component {
             <Text style={styles.language}>EN</Text>
           </TouchableOpacity>
           <Icon name="share" style={styles.icon} size={25} />
-          <Icon name="bookmark-border" style={styles.icon} size={30} />
+          <TouchableOpacity
+            onPress={() => this.props.bookmarkPressed(this.props.isBookmarkSelected)}
+          >
+            <Icon
+              name={this.props.isBookmarkSelected ? 'bookmark' : 'bookmark-border'}
+              style={styles.icon}
+              size={30}
+            />
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -76,4 +88,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default NavigationBar;
+function mapStateToProps(state) {
+  return {
+    isBookmarkSelected: state.isBookmarkSelected
+  };
+}
+
+export default connect(mapStateToProps, { bookmarkPressed })(NavigationBar);
