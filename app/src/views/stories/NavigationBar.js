@@ -4,12 +4,26 @@ import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ActionSheet from 'react-native-actionsheet-native';
 import constants from '../../constants';
-import { bookmarkPressed, changeLanguage } from '../../actions';
+import { changeLanguage } from '../../actions';
+import { bookmarkPressed, isBookInFavorite } from '../../actions/bookmark';
 
 const { fontWeight } = constants;
 const options = ['English', 'Turkish', 'Russian', 'Kazakh'];
 
 class NavigationBar extends Component {
+  state = {
+    isBookmarkSelected: false
+  };
+
+  componentDidMount() {
+    const { book } = this.props;
+    isBookInFavorite(book).then(isBookmarkSelected =>
+      this.setState({
+        isBookmarkSelected
+      })
+    );
+  }
+
   dissmiss = () => {
     const { navigation } = this.props;
     navigation.goBack();
@@ -29,7 +43,7 @@ class NavigationBar extends Component {
   };
 
   render() {
-    const { selectedLanguage } = this.props;
+    const { selectedLanguage, book } = this.props;
     return (
       <View style={styles.container}>
         <TouchableOpacity style={styles.leftContainer} onPress={this.dissmiss}>
@@ -41,10 +55,16 @@ class NavigationBar extends Component {
           </TouchableOpacity>
           <Icon name="share" style={styles.icon} size={25} />
           <TouchableOpacity
-            onPress={() => this.props.bookmarkPressed(this.props.isBookmarkSelected)}
+            onPress={() =>
+              bookmarkPressed(book).then(isBookmarkSelected =>
+                this.setState({
+                  isBookmarkSelected
+                })
+              )
+            }
           >
             <Icon
-              name={this.props.isBookmarkSelected ? 'bookmark' : 'bookmark-border'}
+              name={this.state.isBookmarkSelected ? 'bookmark' : 'bookmark-border'}
               style={styles.icon}
               size={30}
             />
@@ -90,9 +110,8 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
-    isBookmarkSelected: state.isBookmarkSelected,
     selectedLanguage: state.selectedLanguage
   };
 }
 
-export default connect(mapStateToProps, { bookmarkPressed, changeLanguage })(NavigationBar);
+export default connect(mapStateToProps, { changeLanguage })(NavigationBar);

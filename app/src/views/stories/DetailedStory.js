@@ -12,22 +12,23 @@ class DetailedStory extends Component {
   configure = type => {
     switch (this.props.selectedLanguage) {
       case 'RU':
-        return this.props.navigation.state.params[`russian${type}`];
+        return this.props.navigation.state.params.book[`russian${type}`];
       case 'KZ':
-        return this.props.navigation.state.params[`kazakh${type}`];
+        return this.props.navigation.state.params.book[`kazakh${type}`];
       case 'EN':
-        return this.props.navigation.state.params[`english${type}`];
+        return this.props.navigation.state.params.book[`english${type}`];
       case 'TK':
-        return this.props.navigation.state.params[`turkish${type}`];
+        return this.props.navigation.state.params.book[`turkish${type}`];
       default:
-        return this.props.navigation.state.params[`english${type}`];
+        return this.props.navigation.state.params.book[`english${type}`];
     }
   };
 
   render() {
+    const { book } = this.props.navigation.state.params;
     return (
       <ImageBackground source={require('../../backgrounds/light.png')} style={styles.container}>
-        <NavigationBar navigation={this.props.navigation} />
+        <NavigationBar navigation={this.props.navigation} book={book} />
         <ScrollView>
           <Text style={styles.title}>{this.configure('Text')}</Text>
           <Text style={styles.text}>{this.configure('Title')}</Text>

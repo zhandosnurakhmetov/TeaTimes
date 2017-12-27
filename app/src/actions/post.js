@@ -9,7 +9,9 @@ export function fetchPosts() {
       const results = snapshot.val();
 
       for (const element in results) {
-        array.push(results[element]);
+        const item = results[element];
+        item.id = element;
+        array.push(item);
       }
 
       const types = array.map(book => book.type);

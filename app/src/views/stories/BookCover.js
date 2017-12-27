@@ -7,7 +7,8 @@ const { colors, fontWeight } = constants;
 class BookCover extends Component {
   didSelectItem = () => {
     const { book } = this.props;
-    this.props.navigation.navigate('DetailedStory', { ...book });
+    console.log(book);
+    this.props.navigation.navigate('DetailedStory', { book });
   };
 
   render() {
