@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ActionSheet from 'react-native-actionsheet-native';
 import constants from '../../constants';
-import { bookmarkPressed } from '../../actions';
+import { bookmarkPressed, changeLanguage } from '../../actions';
 
 const { fontWeight } = constants;
-const options = ['English', 'Turkish', 'Russian', 'Kazakh', 'Cancel'];
+const options = ['English', 'Turkish', 'Russian', 'Kazakh'];
 
 class NavigationBar extends Component {
   dissmiss = () => {
@@ -20,16 +20,16 @@ class NavigationBar extends Component {
     ActionSheet.showActionSheetWithOptions(
       {
         options,
-        cancelButtonIndex: 4
+        cancelButtonIndex: -1
       },
       buttonIndex => {
-        console.log(options[buttonIndex]);
+        this.props.changeLanguage(options[buttonIndex]);
       }
     );
   };
 
   render() {
-    console.log(this.props.isBookmarkSelected, 'state');
+    const { selectedLanguage } = this.props;
     return (
       <View style={styles.container}>
         <TouchableOpacity style={styles.leftContainer} onPress={this.dissmiss}>
@@ -37,7 +37,7 @@ class NavigationBar extends Component {
         </TouchableOpacity>
         <View style={styles.rightContainer}>
           <TouchableOpacity onPress={this.changeLanguage}>
-            <Text style={styles.language}>EN</Text>
+            <Text style={styles.language}>{selectedLanguage === '' ? 'EN' : selectedLanguage}</Text>
           </TouchableOpacity>
           <Icon name="share" style={styles.icon} size={25} />
           <TouchableOpacity
@@ -90,8 +90,9 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
-    isBookmarkSelected: state.isBookmarkSelected
+    isBookmarkSelected: state.isBookmarkSelected,
+    selectedLanguage: state.selectedLanguage
   };
 }
 
-export default connect(mapStateToProps, { bookmarkPressed })(NavigationBar);
+export default connect(mapStateToProps, { bookmarkPressed, changeLanguage })(NavigationBar);

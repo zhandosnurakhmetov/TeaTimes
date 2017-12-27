@@ -13,7 +13,7 @@ class BookCover extends Component {
   render() {
     return (
       <TouchableOpacity style={styles.container} onPress={this.didSelectItem}>
-        <Text style={styles.title}>{this.props.book.title}</Text>
+        <Text style={styles.title}>{this.props.book.russianTitle}</Text>
       </TouchableOpacity>
     );
   }
