@@ -5,10 +5,17 @@ import { connect } from 'react-redux';
 import constants from '../../constants';
 import AudioPlayer from './AudioPlayer';
 import NavigationBar from './NavigationBar';
+import { fetchPosts } from '../../actions';
+// import { configureFavorites } from '../../actions';
 
 const { fontWeight } = constants;
 
 class DetailedStory extends Component {
+  componentWillUnmount() {
+    this.props.fetchPosts();
+    // this.props.configureFavorites(this.props.posts);
+  }
+
   configure = type => {
     switch (this.props.selectedLanguage) {
       case 'RU':
@@ -67,8 +74,9 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
-    selectedLanguage: state.selectedLanguage
+    selectedLanguage: state.selectedLanguage,
+    posts: state.posts
   };
 }
 
-export default connect(mapStateToProps)(DetailedStory);
+export default connect(mapStateToProps, { fetchPosts })(DetailedStory);

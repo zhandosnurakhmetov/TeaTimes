@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ImageBackground, StyleSheet, FlatList, Text } from 'react-native';
+import { ImageBackground, StyleSheet, FlatList, Text, AsyncStorage } from 'react-native';
 import { connect } from 'react-redux';
 import BooksCollectionView from './BooksCollectionView';
 import { fetchPosts } from '../../actions';
