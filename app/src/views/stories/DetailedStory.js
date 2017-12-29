@@ -6,14 +6,12 @@ import constants from '../../constants';
 import AudioPlayer from './AudioPlayer';
 import NavigationBar from './NavigationBar';
 import { fetchPosts } from '../../actions';
-// import { configureFavorites } from '../../actions';
 
-const { fontWeight } = constants;
+const { fontWeight, background, colors } = constants;
 
 class DetailedStory extends Component {
   componentWillUnmount() {
     this.props.fetchPosts();
-    // this.props.configureFavorites(this.props.posts);
   }
 
   configure = type => {
@@ -33,49 +31,53 @@ class DetailedStory extends Component {
 
   render() {
     const { book } = this.props.navigation.state.params;
+    const { theme } = this.props;
+    const { contentColor, icon, primary } = colors[theme];
     return (
-      <ImageBackground source={require('../../backgrounds/light.png')} style={styles.container}>
-        <NavigationBar navigation={this.props.navigation} book={book} />
+      <ImageBackground source={background[theme]} style={styles(contentColor).container}>
+        <NavigationBar navigation={this.props.navigation} book={book} iconColor={icon} />
         <ScrollView>
-          <Text style={styles.title}>{this.configure('Text')}</Text>
-          <Text style={styles.text}>{this.configure('Title')}</Text>
+          <Text style={styles(contentColor).title}>{this.configure('Text')}</Text>
+          <Text style={styles(contentColor).title}>{this.configure('Title')}</Text>
         </ScrollView>
-        <AudioPlayer />
+        <AudioPlayer color={primary} textColor={contentColor} iconColor={icon} />
       </ImageBackground>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
-  title: {
-    fontSize: 24,
-    color: 'black',
-    fontFamily: 'Avenir',
-    fontWeight: fontWeight.heavy,
-    textAlign: 'center',
-    backgroundColor: 'transparent',
-    paddingTop: 20
-  },
-  text: {
-    fontSize: 17,
-    color: 'black',
-    fontFamily: 'Avenir',
-    fontWeight: fontWeight.roman,
-    textAlign: 'center',
-    backgroundColor: 'transparent',
-    paddingTop: 10,
-    paddingLeft: 10,
-    paddingRight: 10
-  }
-});
+const styles = color =>
+  StyleSheet.create({
+    container: {
+      flex: 1
+    },
+    title: {
+      fontSize: 24,
+      color,
+      fontFamily: 'Avenir',
+      fontWeight: fontWeight.heavy,
+      textAlign: 'center',
+      backgroundColor: 'transparent',
+      paddingTop: 20
+    },
+    text: {
+      fontSize: 17,
+      color,
+      fontFamily: 'Avenir',
+      fontWeight: fontWeight.roman,
+      textAlign: 'center',
+      backgroundColor: 'transparent',
+      paddingTop: 10,
+      paddingLeft: 10,
+      paddingRight: 10
+    }
+  });
 
 function mapStateToProps(state) {
   return {
     selectedLanguage: state.selectedLanguage,
-    posts: state.posts
+    posts: state.posts,
+    theme: state.theme
   };
 }
 
