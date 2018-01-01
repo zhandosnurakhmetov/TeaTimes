@@ -23,6 +23,7 @@ class Player extends Component {
     EventEmitter.on('playback-state', this.handlePlaybackState.bind(this));
     EventEmitter.on('playback-track-changed', this.handleTrackChanged.bind(this));
     EventEmitter.on('playback-queue-ended', this.handleQueueEnded.bind(this));
+    this.updateBook();
     this.updateCurrentTrack();
     this.updatePlaybackState();
     this.updateRate();
@@ -35,44 +36,61 @@ class Player extends Component {
   handleQueueEnded() {
     TrackPlayer.stop();
   }
-  handlePlaybackState(data) {
-    this.setState({
-      ...this.state,
-      playbackState: data.state
-    });
+  async handlePlaybackState(data) {
+    try {
+      this.setState({
+        playbackState: data.state
+      });
+    } catch (e) {
+      console.log(e);
+    }
   }
   async handleTrackChanged(data) {
     try {
       this.setState({
-        ...this.state,
         currentTrack: await TrackPlayer.getTrack(data.nextTrack)
       });
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  async updateBook() {
+    try {
+      const { book } = this.props.navigation.state.params;
+      this.setState({
+        book
+      });
+    } catch (e) {
+      console.log(e);
+    }
   }
   async updateCurrentTrack() {
     try {
       const id = await TrackPlayer.getCurrentTrack();
       this.setState({
-        ...this.state,
         currentTrack: await TrackPlayer.getTrack(id)
       });
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   }
   async updatePlaybackState() {
     try {
       this.setState({
-        ...this.state,
         playbackState: await TrackPlayer.getState()
       });
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   }
   async updateRate() {
     try {
       this.setState({
-        ...this.state,
         rate: await TrackPlayer.getRate()
       });
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   }
   async backward() {
     try {
@@ -80,7 +98,9 @@ class Player extends Component {
       let newTime = seconds - 5;
       if (newTime < 0) newTime = 0;
       TrackPlayer.seekTo(newTime);
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   }
   async forward() {
     try {
@@ -89,7 +109,9 @@ class Player extends Component {
       let newTime = seconds + 5;
       if (newTime > duration) newTime = duration;
       TrackPlayer.seekTo(newTime);
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   async handlePlayPause() {
@@ -112,7 +134,9 @@ class Player extends Component {
         await TrackPlayer.add([track]);
         TrackPlayer.play();
       }
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   }
   async speed() {
     try {
@@ -121,7 +145,9 @@ class Player extends Component {
       if (rate > 2) rate = 0.5;
       TrackPlayer.setRate(rate);
       this.updateRate();
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   }
   share() {
     const options = {
@@ -132,12 +158,16 @@ class Player extends Component {
       if (err) console.log(err);
     });
   }
-  close() {}
+  close() {
+    this.props.navigation.goBack();
+  }
   async download() {
     try {
       const res = await DownloadManager.download(this.state.book.id, this.state.book.audio);
       console.log('The file saved to ', res.path());
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   }
   currentTitle() {
     if (this.state.currentTrack) return this.state.currentTrack.title;
@@ -149,7 +179,7 @@ class Player extends Component {
     return (
       <ImageBackground source={require('../../backgrounds/light.png')} style={styles.container}>
         <View style={styles.headerContainer}>
-          <TouchableOpacity onPress={this.close}>
+          <TouchableOpacity onPress={this.close.bind(this)}>
             <Icon name="expand-more" size={35} color={colors.light.icon} />
           </TouchableOpacity>
         </View>

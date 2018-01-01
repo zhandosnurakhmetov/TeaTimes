@@ -10,6 +10,9 @@ const storiesStack = StackNavigator(
     },
     DetailedStory: {
       screen: DetailedStory
+    },
+    Player: {
+      screen: Player
     }
   },
   {
@@ -27,12 +30,6 @@ const Router = TabNavigator(
     },
     Settings: {
       screen: Settings,
-      navigationOptions: {
-        tabBarIcon: ({ tintColor }) => <Icon name="settings" size={30} color={tintColor} />
-      }
-    },
-    Player: {
-      screen: Player,
       navigationOptions: {
         tabBarIcon: ({ tintColor }) => <Icon name="settings" size={30} color={tintColor} />
       }

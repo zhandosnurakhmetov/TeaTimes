@@ -29,6 +29,11 @@ class DetailedStory extends Component {
     }
   };
 
+  onPressAudioTitle() {
+    const { book } = this.props.navigation.state.params;
+    this.props.navigation.navigate('Player', { book });
+  }
+
   render() {
     const { book } = this.props.navigation.state.params;
     const { theme } = this.props;
@@ -40,7 +45,12 @@ class DetailedStory extends Component {
           <Text style={styles(contentColor).title}>{this.configure('Text')}</Text>
           <Text style={styles(contentColor).title}>{this.configure('Title')}</Text>
         </ScrollView>
-        <AudioPlayer color={primary} textColor={contentColor} iconColor={icon} />
+        <AudioPlayer
+          color={primary}
+          textColor={contentColor}
+          iconColor={icon}
+          onPressAudioTitle={this.onPressAudioTitle.bind(this)}
+        />
       </ImageBackground>
     );
   }
