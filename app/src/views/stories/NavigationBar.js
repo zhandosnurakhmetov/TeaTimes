@@ -4,12 +4,26 @@ import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ActionSheet from 'react-native-actionsheet-native';
 import constants from '../../constants';
-import { bookmarkPressed, changeLanguage } from '../../actions';
+import { changeLanguage } from '../../actions';
+import { bookmarkPressed, isBookInFavorite } from '../../actions/bookmark';
 
 const { fontWeight } = constants;
 const options = ['English', 'Turkish', 'Russian', 'Kazakh'];
 
 class NavigationBar extends Component {
+  state = {
+    isBookmarkSelected: false
+  };
+
+  componentDidMount() {
+    const { book } = this.props;
+    isBookInFavorite(book).then(isBookmarkSelected =>
+      this.setState({
+        isBookmarkSelected
+      })
+    );
+  }
+
   dissmiss = () => {
     const { navigation } = this.props;
     navigation.goBack();
@@ -29,24 +43,33 @@ class NavigationBar extends Component {
   };
 
   render() {
-    const { selectedLanguage } = this.props;
+    const { selectedLanguage, book, iconColor } = this.props;
     return (
-      <View style={styles.container}>
-        <TouchableOpacity style={styles.leftContainer} onPress={this.dissmiss}>
-          <Icon name="keyboard-arrow-left" size={40} />
+      <View style={styles(iconColor).container}>
+        <TouchableOpacity style={styles(iconColor).leftContainer} onPress={this.dissmiss}>
+          <Icon name="keyboard-arrow-left" size={40} color={iconColor} />
         </TouchableOpacity>
-        <View style={styles.rightContainer}>
+        <View style={styles(iconColor).rightContainer}>
           <TouchableOpacity onPress={this.changeLanguage}>
-            <Text style={styles.language}>{selectedLanguage === '' ? 'EN' : selectedLanguage}</Text>
+            <Text style={styles(iconColor).language}>
+              {selectedLanguage === '' ? 'EN' : selectedLanguage}
+            </Text>
           </TouchableOpacity>
-          <Icon name="share" style={styles.icon} size={25} />
+          <Icon name="share" style={styles(iconColor).icon} size={25} color={iconColor} />
           <TouchableOpacity
-            onPress={() => this.props.bookmarkPressed(this.props.isBookmarkSelected)}
+            onPress={() =>
+              bookmarkPressed(book).then(isBookmarkSelected =>
+                this.setState({
+                  isBookmarkSelected
+                })
+              )
+            }
           >
             <Icon
-              name={this.props.isBookmarkSelected ? 'bookmark' : 'bookmark-border'}
-              style={styles.icon}
+              name={this.state.isBookmarkSelected ? 'bookmark' : 'bookmark-border'}
+              style={styles(iconColor).icon}
               size={30}
+              color={iconColor}
             />
           </TouchableOpacity>
         </View>
@@ -55,44 +78,44 @@ class NavigationBar extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    height: 44,
-    backgroundColor: 'transparent'
-  },
-  leftContainer: {
-    flexGrow: 0,
-    alignItems: 'center',
-    justifyContent: 'flex-start'
-  },
-  rightContainer: {
-    flexGrow: 10,
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'flex-end'
-  },
-  language: {
-    fontSize: 20,
-    color: 'black',
-    fontFamily: 'Avenir',
-    fontWeight: fontWeight.heavy,
-    backgroundColor: 'transparent',
-    marginRight: 10
-  },
-  icon: {
-    marginRight: 10,
-    marginLeft: 10
-  }
-});
+const styles = color =>
+  StyleSheet.create({
+    container: {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      height: 44,
+      backgroundColor: 'transparent'
+    },
+    leftContainer: {
+      flexGrow: 0,
+      alignItems: 'center',
+      justifyContent: 'flex-start'
+    },
+    rightContainer: {
+      flexGrow: 10,
+      alignItems: 'center',
+      flexDirection: 'row',
+      justifyContent: 'flex-end'
+    },
+    language: {
+      fontSize: 20,
+      color,
+      fontFamily: 'Avenir',
+      fontWeight: fontWeight.heavy,
+      backgroundColor: 'transparent',
+      marginRight: 10
+    },
+    icon: {
+      marginRight: 10,
+      marginLeft: 10
+    }
+  });
 
 function mapStateToProps(state) {
   return {
-    isBookmarkSelected: state.isBookmarkSelected,
     selectedLanguage: state.selectedLanguage
   };
 }
 
-export default connect(mapStateToProps, { bookmarkPressed, changeLanguage })(NavigationBar);
+export default connect(mapStateToProps, { changeLanguage })(NavigationBar);

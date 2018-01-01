@@ -3,6 +3,9 @@ import { ImageBackground, StyleSheet, FlatList, Text } from 'react-native';
 import { connect } from 'react-redux';
 import BooksCollectionView from './BooksCollectionView';
 import { fetchPosts } from '../../actions';
+import constants from '../../constants';
+
+const { background } = constants;
 
 class Stories extends Component {
   componentDidMount() {
@@ -16,13 +19,13 @@ class Stories extends Component {
   };
 
   render() {
-    const { posts } = this.props;
+    const { theme, posts } = this.props;
     if (posts.length === 0) {
       return <Text style={styles.loader}>Loading...</Text>;
     }
 
     return (
-      <ImageBackground source={require('../../backgrounds/light.png')} style={styles.container}>
+      <ImageBackground source={background[theme]} style={styles.container}>
         <FlatList
           data={posts.map(item => item.type)}
           renderItem={this.renderItem}
@@ -41,7 +44,8 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
-    posts: state.posts
+    posts: state.posts,
+    theme: state.theme
   };
 }
 
