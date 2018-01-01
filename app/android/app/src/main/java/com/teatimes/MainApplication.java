@@ -3,6 +3,10 @@ package com.teatimes;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.RNFetchBlob.RNFetchBlobPackage;
+import guichaguri.trackplayer.TrackPlayer;
+import com.slowpath.actionsheet.ActionSheetPackage;
+import fm.indiecast.rnaudiostreamer.RNAudioStreamerPackage;
 import com.zmxv.RNSound.RNSoundPackage;
 import com.chirag.RNMail.RNMail;
 import com.reactlibrary.RNRatePackage;
@@ -29,6 +33,10 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNFetchBlobPackage(),
+            new TrackPlayer(),
+            new ActionSheetPackage(),
+            new RNAudioStreamerPackage(),
             new RNSoundPackage(),
             new RNMail(),
             new RNRatePackage(),

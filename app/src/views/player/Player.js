@@ -1,36 +1,149 @@
 import React, { Component } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Text, TouchableOpacity, View, ImageBackground, StyleSheet } from 'react-native';
+import TrackPlayer from 'react-native-track-player';
+import EventEmitter from 'react-native-eventemitter';
+import Share from 'react-native-share';
 import colors from '../../constants/colors';
 import fontWeight from '../../constants/fontWeight';
-import PlayerManager from './PlayerManager';
+import PlayerBar from './PlayerBar';
+import DownloadManager from './DownloadManager';
 
 class Player extends Component {
-  close() {}
-  backward() {
-    PlayerManager.getInstance().backward();
+  constructor(props) {
+    super(props);
+    this.state = {
+      book: null,
+      currentTrack: null,
+      playbackState: 'STATE_NONE',
+      rate: 1
+    };
   }
-  forward() {
-    PlayerManager.getInstance().forward();
+  componentWillMount() {
+    EventEmitter.on('playback-state', this.handlePlaybackState.bind(this));
+    EventEmitter.on('playback-track-changed', this.handleTrackChanged.bind(this));
+    EventEmitter.on('playback-queue-ended', this.handleQueueEnded.bind(this));
+    this.updateCurrentTrack();
+    this.updatePlaybackState();
+    this.updateRate();
   }
-  play() {
-    PlayerManager.getInstance().setBook(
-      {
-        title: 'Test',
-        audio:
-          'https://firebasestorage.googleapis.com/v0/b/teatimes-8d7cd.appspot.com/o/test.mp3?alt=media&token=f445738e-c9ec-49bf-8a2c-b8208b9ed30d'
-      },
-      () => {
-        PlayerManager.getInstance().play();
+  componentWillUnmount() {
+    EventEmitter.removeListener('playback-state', this.handlePlaybackState.bind(this));
+    EventEmitter.removeListener('playback-track-changed', this.handleTrackChanged.bind(this));
+    EventEmitter.removeListener('playback-queue-ended', this.handleQueueEnded.bind(this));
+  }
+  handleQueueEnded() {
+    TrackPlayer.stop();
+  }
+  handlePlaybackState(data) {
+    this.setState({
+      ...this.state,
+      playbackState: data.state
+    });
+  }
+  async handleTrackChanged(data) {
+    try {
+      this.setState({
+        ...this.state,
+        currentTrack: await TrackPlayer.getTrack(data.nextTrack)
+      });
+    } catch (e) {}
+  }
+  async updateCurrentTrack() {
+    try {
+      const id = await TrackPlayer.getCurrentTrack();
+      this.setState({
+        ...this.state,
+        currentTrack: await TrackPlayer.getTrack(id)
+      });
+    } catch (e) {}
+  }
+  async updatePlaybackState() {
+    try {
+      this.setState({
+        ...this.state,
+        playbackState: await TrackPlayer.getState()
+      });
+    } catch (e) {}
+  }
+  async updateRate() {
+    try {
+      this.setState({
+        ...this.state,
+        rate: await TrackPlayer.getRate()
+      });
+    } catch (e) {}
+  }
+  async backward() {
+    try {
+      const seconds = await TrackPlayer.getPosition();
+      let newTime = seconds - 5;
+      if (newTime < 0) newTime = 0;
+      TrackPlayer.seekTo(newTime);
+    } catch (e) {}
+  }
+  async forward() {
+    try {
+      const seconds = await TrackPlayer.getPosition();
+      const duration = await TrackPlayer.getDuration();
+      let newTime = seconds + 5;
+      if (newTime > duration) newTime = duration;
+      TrackPlayer.seekTo(newTime);
+    } catch (e) {}
+  }
+
+  async handlePlayPause() {
+    try {
+      const playbackState = await TrackPlayer.getState();
+      if (playbackState === 'STATE_PLAYING') {
+        TrackPlayer.pause();
+      } else if (playbackState === 'STATE_PAUSED') {
+        TrackPlayer.play();
+      } else {
+        TrackPlayer.destroy();
+        await TrackPlayer.setupPlayer();
+        const url = await DownloadManager.getUrl(this.state.book.id, this.state.book.audio);
+        const track = {
+          url,
+          id: this.state.book.id,
+          title: this.state.book.title,
+          artist: 'TeaTimes'
+        };
+        await TrackPlayer.add([track]);
+        TrackPlayer.play();
       }
-    );
+    } catch (e) {}
   }
-  speed() {
-    PlayerManager.getInstance().speed();
+  async speed() {
+    try {
+      let rate = await TrackPlayer.getRate();
+      rate += 0.5;
+      if (rate > 2) rate = 0.5;
+      TrackPlayer.setRate(rate);
+      this.updateRate();
+    } catch (e) {}
   }
-  share() {}
-  download() {}
-  slide() {}
+  share() {
+    const options = {
+      message: 'Read interesting stories in english',
+      url: 'https://facebook.github.io/react-native/'
+    };
+    Share.open(options).catch(err => {
+      if (err) console.log(err);
+    });
+  }
+  close() {}
+  async download() {
+    try {
+      const res = await DownloadManager.download(this.state.book.id, this.state.book.audio);
+      console.log('The file saved to ', res.path());
+    } catch (e) {}
+  }
+  currentTitle() {
+    if (this.state.currentTrack) return this.state.currentTrack.title;
+    if (this.state.book) return this.state.book.title;
+    return '';
+  }
 
   render() {
     return (
@@ -41,41 +154,36 @@ class Player extends Component {
           </TouchableOpacity>
         </View>
         <View style={styles.coverContainer}>
-          <Text style={styles.cover}>The Fox and The Crow</Text>
+          <Text style={styles.cover}>{this.currentTitle()}</Text>
         </View>
-        <View style={styles.sliderContainer}>
-          <View style={styles.slider} />
-          <TouchableOpacity onPress={this.slide}>
-            <View style={styles.sliderHandler} />
-          </TouchableOpacity>
-          <View style={styles.timeContainer}>
-            <View style={styles.passedTimeContainer}>
-              <Text style={styles.passedTime}>3:14</Text>
-            </View>
-            <View style={styles.remainedTimeContainer}>
-              <Text style={styles.remainedTime}>-17:10</Text>
-            </View>
-          </View>
-        </View>
+        <PlayerBar />
         <View style={styles.playerContainer}>
-          <TouchableOpacity onPress={this.backward}>
+          <TouchableOpacity onPress={this.backward.bind(this)}>
             <Icon name="replay-5" size={60} color={colors.light.icon} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={this.play}>
-            <Icon name="play-arrow" size={60} color={colors.light.icon} />
+          <TouchableOpacity onPress={this.handlePlayPause.bind(this)}>
+            <Icon
+              name={
+                this.state.playbackState === 'STATE_PLAYING' ||
+                this.state.playbackState === 'STATE_BUFFERING'
+                  ? 'pause'
+                  : 'play-arrow'
+              }
+              size={60}
+            />
           </TouchableOpacity>
-          <TouchableOpacity onPress={this.forward}>
+          <TouchableOpacity onPress={this.forward.bind(this)}>
             <Icon name="forward-5" size={60} color={colors.light.icon} />
           </TouchableOpacity>
         </View>
         <View style={styles.footerContainer}>
-          <TouchableOpacity onPress={this.speed}>
-            <Text style={styles.speed}>1x</Text>
+          <TouchableOpacity onPress={this.speed.bind(this)}>
+            <Text style={styles.speed}>{this.state.rate}x</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={this.download} style={styles.download}>
+          <TouchableOpacity onPress={this.download.bind(this)} style={styles.download}>
             <Text style={styles.downloadTitle}>Download</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={this.share}>
+          <TouchableOpacity onPress={this.share} style={{ width: 56, alignItems: 'center' }}>
             <Icon name="share" size={35} color={colors.light.icon} />
           </TouchableOpacity>
         </View>
@@ -99,21 +207,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'transparent'
   },
-  sliderContainer: {
-    flex: 0,
-    backgroundColor: 'transparent'
-  },
-  timeContainer: {
-    flex: 0,
-    marginTop: 8,
-    flexDirection: 'row'
-  },
-  passedTimeContainer: {
-    flex: 1
-  },
-  remainedTimeContainer: {
-    flex: 1
-  },
   playerContainer: {
     flex: 0,
     height: 120,
@@ -130,32 +223,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     backgroundColor: 'transparent'
   },
-  slider: {
-    height: 4,
-    backgroundColor: colors.light.slider
-  },
-  sliderHandler: {
-    marginTop: -4,
-    marginLeft: '10%',
-    height: 11,
-    width: 2,
-    backgroundColor: colors.light.sliderHandler
-  },
-  passedTime: {
-    fontFamily: 'Avenir',
-    fontWeight: fontWeight.light,
-    fontSize: 12,
-    color: colors.light.text,
-    marginLeft: 10
-  },
-  remainedTime: {
-    fontFamily: 'Avenir',
-    fontWeight: fontWeight.light,
-    fontSize: 12,
-    color: colors.light.text,
-    marginRight: 10,
-    textAlign: 'right'
-  },
   cover: {
     width: '80%',
     fontFamily: 'Avenir',
@@ -165,6 +232,8 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   speed: {
+    textAlign: 'center',
+    width: 56,
     fontFamily: 'Avenir',
     fontWeight: fontWeight.black,
     fontSize: 24,

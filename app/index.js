@@ -1,5 +1,6 @@
 import { AppRegistry } from 'react-native';
 import * as firebase from 'firebase';
+import TrackPlayer from 'react-native-track-player';
 import App from './App';
 
 const firebaseConfig = {
@@ -12,5 +13,6 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+TrackPlayer.registerEventHandler(require('./src/utils/PlayerHandler'));
 
 AppRegistry.registerComponent('TeaTimes', () => App);
