@@ -50,6 +50,7 @@ class DetailedStory extends Component {
           textColor={contentColor}
           iconColor={icon}
           onPressAudioTitle={this.onPressAudioTitle.bind(this)}
+          book={book}
         />
       </ImageBackground>
     );

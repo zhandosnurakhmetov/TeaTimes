@@ -19,7 +19,7 @@ class Player extends Component {
       rate: 1
     };
   }
-  componentWillMount() {
+  componentDidMount() {
     EventEmitter.on('playback-state', this.handlePlaybackState.bind(this));
     EventEmitter.on('playback-track-changed', this.handleTrackChanged.bind(this));
     EventEmitter.on('playback-queue-ended', this.handleQueueEnded.bind(this));
@@ -29,9 +29,9 @@ class Player extends Component {
     this.updateRate();
   }
   componentWillUnmount() {
-    EventEmitter.removeListener('playback-state', this.handlePlaybackState.bind(this));
-    EventEmitter.removeListener('playback-track-changed', this.handleTrackChanged.bind(this));
-    EventEmitter.removeListener('playback-queue-ended', this.handleQueueEnded.bind(this));
+    EventEmitter.removeAllListeners('playback-state');
+    EventEmitter.removeAllListeners('playback-track-changed');
+    EventEmitter.removeAllListeners('playback-queue-ended');
   }
   handleQueueEnded() {
     TrackPlayer.stop();
@@ -113,7 +113,6 @@ class Player extends Component {
       console.log(e);
     }
   }
-
   async handlePlayPause() {
     try {
       const playbackState = await TrackPlayer.getState();

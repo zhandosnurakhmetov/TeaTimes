@@ -1,21 +1,137 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import TrackPlayer from 'react-native-track-player';
+import EventEmitter from 'react-native-eventemitter';
 import constants from '../../constants';
+import DownloadManager from '../player/DownloadManager';
 
 const { fontWeight } = constants;
 
 export default class AudioPlayer extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      book: null,
+      currentTrack: null,
+      playbackState: 'STATE_NONE',
+      rate: 1
+    };
+  }
+  componentDidMount() {
+    EventEmitter.on('mini-playback-state', this.handlePlaybackState.bind(this));
+    EventEmitter.on('mini-playback-track-changed', this.handleTrackChanged.bind(this));
+    EventEmitter.on('mini-playback-queue-ended', this.handleQueueEnded.bind(this));
+    this.updateBook();
+    this.updateCurrentTrack();
+    this.updatePlaybackState();
+  }
+  componentWillUnmount() {
+    EventEmitter.removeAllListeners('mini-playback-state');
+    EventEmitter.removeAllListeners('mini-playback-track-changed');
+    EventEmitter.removeAllListeners('mini-playback-queue-ended');
+  }
+  handleQueueEnded() {
+    TrackPlayer.stop();
+  }
+  async handlePlaybackState(data) {
+    try {
+      this.setState({
+        playbackState: data.state
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  async handleTrackChanged(data) {
+    try {
+      this.setState({
+        currentTrack: await TrackPlayer.getTrack(data.nextTrack)
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  async updateBook() {
+    try {
+      const { book } = this.props;
+      this.setState({
+        book
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  async updateCurrentTrack() {
+    try {
+      const id = await TrackPlayer.getCurrentTrack();
+      this.setState({
+        currentTrack: await TrackPlayer.getTrack(id)
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  async updatePlaybackState() {
+    try {
+      this.setState({
+        playbackState: await TrackPlayer.getState()
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  async handlePlayPause() {
+    try {
+      const playbackState = await TrackPlayer.getState();
+      if (playbackState === 'STATE_PLAYING') {
+        TrackPlayer.pause();
+      } else if (playbackState === 'STATE_PAUSED') {
+        TrackPlayer.play();
+      } else {
+        TrackPlayer.destroy();
+        await TrackPlayer.setupPlayer();
+        const url = await DownloadManager.getUrl(this.state.book.id, this.state.book.audio);
+        const track = {
+          url,
+          id: this.state.book.id,
+          title: this.state.book.title,
+          artist: 'TeaTimes'
+        };
+        await TrackPlayer.add([track]);
+        TrackPlayer.play();
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  currentTitle() {
+    if (this.state.currentTrack) return this.state.currentTrack.title;
+    if (this.state.book) return this.state.book.title;
+    return '';
+  }
   render() {
     const { color, textColor, iconColor, onPressAudioTitle } = this.props;
     return (
       <View style={styles(color, textColor).container}>
-        <Icon name="play-arrow" style={styles(color, textColor).icon} size={30} color={iconColor} />
+        <TouchableOpacity onPress={this.handlePlayPause.bind(this)}>
+          <Icon
+            name={
+              this.state.playbackState === 'STATE_PLAYING' ||
+              this.state.playbackState === 'STATE_BUFFERING'
+                ? 'pause'
+                : 'play-arrow'
+            }
+            style={styles(color, textColor).icon}
+            size={30}
+            color={iconColor}
+          />
+        </TouchableOpacity>
         <TouchableOpacity
           onPress={onPressAudioTitle}
           style={styles(color, textColor).textContainer}
         >
-          <Text style={styles(color, textColor).title}>The Fox and The Crow</Text>
+          <Text style={styles(color, textColor).title}>{this.currentTitle()}</Text>
         </TouchableOpacity>
       </View>
     );
