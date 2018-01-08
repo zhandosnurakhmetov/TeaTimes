@@ -28,37 +28,41 @@ class PlayerBar extends TrackPlayer.ProgressComponent {
 
   render() {
     return (
-      <View style={styles('light', this.calcSliderHandlerMargin()).container}>
+      <View style={styles(this.props.theme, this.calcSliderHandlerMargin()).container}>
         <Bar
           progress={this.getBufferedProgress()}
           width={null}
           height={4}
           borderRadius={0}
           useNativeDriver
-          color={colors.light.sliderBuffer}
-          unfilledColor={colors.light.slider}
+          color={colors[this.props.theme].sliderBuffer}
+          unfilledColor={colors[this.props.theme].slider}
           borderWidth={0}
         />
         <Bar
           animated={false}
-          style={styles('light', this.calcSliderHandlerMargin()).progress}
+          style={styles(this.props.theme, this.calcSliderHandlerMargin()).progress}
           progress={this.getProgress()}
           width={null}
           height={4}
           borderRadius={0}
           useNativeDriver
-          color={colors.light.sliderHandler}
+          color={colors[this.props.theme].sliderHandler}
           borderWidth={0}
         />
-        <View style={styles('light', this.calcSliderHandlerMargin()).sliderHandler} />
-        <View style={styles('light', this.calcSliderHandlerMargin()).timeContainer}>
-          <View style={styles('light', this.calcSliderHandlerMargin()).passedTimeContainer}>
-            <Text style={styles('light', this.calcSliderHandlerMargin()).passedTime}>
+        <View style={styles(this.props.theme, this.calcSliderHandlerMargin()).sliderHandler} />
+        <View style={styles(this.props.theme, this.calcSliderHandlerMargin()).timeContainer}>
+          <View
+            style={styles(this.props.theme, this.calcSliderHandlerMargin()).passedTimeContainer}
+          >
+            <Text style={styles(this.props.theme, this.calcSliderHandlerMargin()).passedTime}>
               {this.formatTime(this.state.position)}
             </Text>
           </View>
-          <View style={styles('light', this.calcSliderHandlerMargin()).remainedTimeContainer}>
-            <Text style={styles('light', this.calcSliderHandlerMargin()).remainedTime}>
+          <View
+            style={styles(this.props.theme, this.calcSliderHandlerMargin()).remainedTimeContainer}
+          >
+            <Text style={styles(this.props.theme, this.calcSliderHandlerMargin()).remainedTime}>
               -{this.formatTime(this.state.duration - this.state.position)}
             </Text>
           </View>
@@ -68,7 +72,7 @@ class PlayerBar extends TrackPlayer.ProgressComponent {
   }
 }
 
-const styles = (theme, sliderHandlerMargin) =>
+const styles = (currentTheme, sliderHandlerMargin) =>
   StyleSheet.create({
     container: {
       flex: 0,
@@ -93,20 +97,20 @@ const styles = (theme, sliderHandlerMargin) =>
       marginLeft: sliderHandlerMargin,
       height: 11,
       width: 2,
-      backgroundColor: colors.light.sliderHandler
+      backgroundColor: colors[currentTheme].sliderHandler
     },
     passedTime: {
       fontFamily: 'Avenir',
       fontWeight: fontWeight.light,
       fontSize: 12,
-      color: colors.light.text,
+      color: colors[currentTheme].text,
       marginLeft: 10
     },
     remainedTime: {
       fontFamily: 'Avenir',
       fontWeight: fontWeight.light,
       fontSize: 12,
-      color: colors.light.text,
+      color: colors[currentTheme].text,
       marginRight: 10,
       textAlign: 'right'
     }
