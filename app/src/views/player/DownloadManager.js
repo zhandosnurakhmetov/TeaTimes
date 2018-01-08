@@ -8,11 +8,18 @@ class DownloadManager {
       path: `${dirs.DocumentDir}/${id}.mp3`
     }).fetch('GET', url, {});
   }
-  static async getUrl(id, url) {
+  static async getUrl(id, remoteUrl) {
     const localUrl = `${dirs.DocumentDir}/${id}.mp3`;
-    const exist = await RNFetchBlob.fs.exists(localUrl);
-    if (exist) return `file://${localUrl}`;
+    const exists = await RNFetchBlob.fs.exists(localUrl);
+    let url = remoteUrl;
+    if (exists) url = `file://${localUrl}`;
     return url;
+  }
+  static async exists(id) {
+    if (!id) return false;
+    const localUrl = `${dirs.DocumentDir}/${id}.mp3`;
+    const exists = await RNFetchBlob.fs.exists(localUrl);
+    return exists;
   }
 }
 

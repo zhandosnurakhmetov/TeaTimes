@@ -19,7 +19,8 @@ class Player extends Component {
       book: null,
       currentTrack: null,
       playbackState: 'STATE_NONE',
-      rate: 1
+      rate: 1,
+      downloadState: 'NOT_LOADED'
     };
   }
   componentDidMount() {
@@ -60,8 +61,10 @@ class Player extends Component {
   async updateBook() {
     try {
       const { book } = this.props.navigation.state.params;
+      const exists = await DownloadManager.exists(book.id);
       this.setState({
-        book
+        book,
+        downloadState: exists ? 'LOADED' : 'NOT_LOADED'
       });
     } catch (e) {
       console.log(e);
@@ -165,8 +168,14 @@ class Player extends Component {
   }
   async download() {
     try {
+      this.setState({
+        downloadState: 'LOADING'
+      });
       const res = await DownloadManager.download(this.state.book.id, this.state.book.audio);
       console.log('The file saved to ', res.path());
+      this.setState({
+        downloadState: 'LOADED'
+      });
     } catch (e) {
       console.log(e);
     }
@@ -175,6 +184,11 @@ class Player extends Component {
     if (this.state.currentTrack) return this.state.currentTrack.title;
     if (this.state.book) return this.state.book.title;
     return '';
+  }
+  currentDownloadState() {
+    if (this.state.downloadState === 'LOADING') return '...';
+    if (this.state.downloadState === 'LOADED') return 'Downloaded';
+    return 'Download';
   }
 
   render() {
@@ -219,8 +233,11 @@ class Player extends Component {
           <TouchableOpacity
             onPress={this.download.bind(this)}
             style={styles(this.props.theme).download}
+            disabled={this.state.downloadState !== 'NOT_LOADED'}
           >
-            <Text style={styles(this.props.theme).downloadTitle}>Download</Text>
+            <Text style={styles(this.props.theme).downloadTitle}>
+              {this.currentDownloadState()}
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={this.share} style={{ width: 56, alignItems: 'center' }}>
             <Icon name="share" size={35} color={colors[this.props.theme].icon} />
@@ -286,6 +303,7 @@ const styles = currentTheme =>
       backgroundColor: 'transparent',
       alignItems: 'center',
       justifyContent: 'center',
+      width: 120,
       paddingTop: 6,
       paddingBottom: 6,
       paddingLeft: 16,
