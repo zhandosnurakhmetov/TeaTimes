@@ -40,8 +40,16 @@ const Router = TabNavigator(
       activeTintColor: 'black',
       inactiveTintColor: 'grey',
       showIcon: true,
-      showLabel: false
-    }
+      showLabel: false,
+      style: {
+        backgroundColor: 'transparent'
+      },
+      indicatorStyle: {
+        backgroundColor: 'transparent'
+      }
+    },
+    tabBarPosition: 'bottom',
+    swipeEnabled: false
   }
 );
 
