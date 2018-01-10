@@ -24,6 +24,8 @@ class Stories extends Component {
       return <Text style={styles.loader}>Loading...</Text>;
     }
 
+    console.log(posts);
+
     return (
       <ImageBackground source={background[theme]} style={styles.container}>
         <FlatList
