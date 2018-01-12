@@ -1,6 +1,6 @@
 import React from 'react';
 import TrackPlayer from 'react-native-track-player';
-import { Text, View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { Text, View, StyleSheet, Dimensions, PanResponder } from 'react-native';
 import { Bar } from 'react-native-progress';
 import colors from '../../constants/colors';
 import fontWeight from '../../constants/fontWeight';
@@ -24,6 +24,12 @@ class PlayerBar extends TrackPlayer.ProgressComponent {
     const fullMargin = Dimensions.get('window').width - 2;
     if (!this.state.position || !this.state.duration) return 0;
     return this.state.position * fullMargin / this.state.duration;
+  }
+
+  handleTouch(y) {
+    const s = y * this.state.duration / Dimensions.get('window').width;
+    this.setState({ position: s });
+    TrackPlayer.seekTo(s);
   }
 
   render() {
@@ -51,6 +57,17 @@ class PlayerBar extends TrackPlayer.ProgressComponent {
           borderWidth={0}
         />
         <View style={styles(this.props.theme, this.calcSliderHandlerMargin()).sliderHandler} />
+        <View
+          onStartShouldSetResponder={() => true}
+          onMoveShouldSetResponder={() => true}
+          onResponderGrant={evt => {
+            this.handleTouch(evt.nativeEvent.locationX);
+          }}
+          onResponderMove={evt => {
+            this.handleTouch(evt.nativeEvent.locationX);
+          }}
+          style={styles(this.props.theme, this.calcSliderHandlerMargin()).touchableContainer}
+        />
         <View style={styles(this.props.theme, this.calcSliderHandlerMargin()).timeContainer}>
           <View
             style={styles(this.props.theme, this.calcSliderHandlerMargin()).passedTimeContainer}
@@ -77,6 +94,10 @@ const styles = (currentTheme, sliderHandlerMargin) =>
     container: {
       flex: 0,
       backgroundColor: 'transparent'
+    },
+    touchableContainer: {
+      height: 11,
+      marginTop: -11
     },
     progress: {
       marginTop: -4

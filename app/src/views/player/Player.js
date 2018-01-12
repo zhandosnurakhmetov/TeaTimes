@@ -38,7 +38,7 @@ class Player extends Component {
     EventEmitter.removeAllListeners('playback-queue-ended');
   }
   handleQueueEnded() {
-    TrackPlayer.stop();
+    TrackPlayer.seekTo(0);
   }
   async handlePlaybackState(data) {
     try {
@@ -89,10 +89,12 @@ class Player extends Component {
       console.log(e);
     }
   }
-  async updateRate() {
+  async updateRate(rate = null) {
+    let newRate = rate;
+    if (!newRate) newRate = await TrackPlayer.getRate();
     try {
       this.setState({
-        rate: await TrackPlayer.getRate()
+        rate: newRate
       });
     } catch (e) {
       console.log(e);
@@ -127,14 +129,14 @@ class Player extends Component {
       } else if (playbackState === 'STATE_PAUSED') {
         TrackPlayer.play();
       } else {
-        TrackPlayer.destroy();
-        await TrackPlayer.setupPlayer();
+        TrackPlayer.reset();
         const url = await DownloadManager.getUrl(this.state.book.id, this.state.book.audio);
         const track = {
           url,
           id: this.state.book.id,
           title: this.state.book.title,
-          artist: 'TeaTimes'
+          artist: 'TeaTimes',
+          artwork: 'https://facebook.github.io/react-native/docs/assets/favicon.png'
         };
         await TrackPlayer.add([track]);
         TrackPlayer.play();
@@ -149,7 +151,7 @@ class Player extends Component {
       rate += 0.5;
       if (rate > 2) rate = 0.5;
       TrackPlayer.setRate(rate);
-      this.updateRate();
+      this.updateRate(rate);
     } catch (e) {
       console.log(e);
     }

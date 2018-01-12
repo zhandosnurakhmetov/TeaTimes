@@ -13,6 +13,9 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+
 TrackPlayer.registerEventHandler(require('./src/utils/PlayerHandler'));
+
+TrackPlayer.setupPlayer();
 
 AppRegistry.registerComponent('TeaTimes', () => App);

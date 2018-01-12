@@ -6,8 +6,6 @@ import com.facebook.react.ReactApplication;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import guichaguri.trackplayer.TrackPlayer;
 import com.slowpath.actionsheet.ActionSheetPackage;
-import fm.indiecast.rnaudiostreamer.RNAudioStreamerPackage;
-import com.zmxv.RNSound.RNSoundPackage;
 import com.chirag.RNMail.RNMail;
 import com.reactlibrary.RNRatePackage;
 import cl.json.RNSharePackage;
@@ -36,8 +34,6 @@ public class MainApplication extends Application implements ReactApplication {
             new RNFetchBlobPackage(),
             new TrackPlayer(),
             new ActionSheetPackage(),
-            new RNAudioStreamerPackage(),
-            new RNSoundPackage(),
             new RNMail(),
             new RNRatePackage(),
             new RNSharePackage(),

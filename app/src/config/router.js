@@ -10,9 +10,6 @@ const storiesStack = StackNavigator(
     },
     DetailedStory: {
       screen: DetailedStory
-    },
-    Player: {
-      screen: Player
     }
   },
   {
@@ -20,18 +17,18 @@ const storiesStack = StackNavigator(
   }
 );
 
-const Router = TabNavigator(
+const Tab = TabNavigator(
   {
     Stories: {
       screen: storiesStack,
       navigationOptions: {
-        tabBarIcon: ({ tintColor }) => <Icon name="home" size={30} color={tintColor} />
+        tabBarIcon: ({ tintColor }) => <Icon name="home" size={25} color={tintColor} />
       }
     },
     Settings: {
       screen: Settings,
       navigationOptions: {
-        tabBarIcon: ({ tintColor }) => <Icon name="settings" size={30} color={tintColor} />
+        tabBarIcon: ({ tintColor }) => <Icon name="settings" size={25} color={tintColor} />
       }
     }
   },
@@ -51,6 +48,21 @@ const Router = TabNavigator(
     tabBarPosition: 'bottom',
     swipeEnabled: false
   }
+);
+
+const Router = StackNavigator(
+  {
+    Tab: {
+      screen: Tab
+    },
+    Player: {
+      screen: Player,
+      navigationOptions: {
+        tabBarVisible: false
+      }
+    }
+  },
+  { headerMode: 'none', mode: 'modal' }
 );
 
 export default Router;

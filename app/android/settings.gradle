@@ -5,10 +5,6 @@ include ':react-native-track-player'
 project(':react-native-track-player').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-track-player/android')
 include ':react-native-actionsheet-native'
 project(':react-native-actionsheet-native').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-actionsheet-native/android')
-include ':react-native-audio-streamer'
-project(':react-native-audio-streamer').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-audio-streamer/android')
-include ':react-native-sound'
-project(':react-native-sound').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-sound/android')
 include ':react-native-mail'
 project(':react-native-mail').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-mail/android')
 include ':react-native-rate'
