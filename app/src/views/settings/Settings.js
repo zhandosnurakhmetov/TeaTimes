@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
+import FCM from 'react-native-fcm';
+import OpenAppSettings from 'react-native-app-settings';
 import {
-  Alert,
+  AppState,
   Text,
   View,
   Image,
@@ -26,6 +27,45 @@ import { capitalizeFirstLetter } from '../../utils/StringHelper';
 const { colors, fontWeight, background } = constants;
 
 class Settings extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isNotificationsOn: false
+    };
+  }
+
+  componentDidMount() {
+    this.checkNotifications();
+    AppState.addEventListener('change', this.checkNotifications.bind(this));
+  }
+
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this.checkNotifications.bind(this));
+  }
+
+  async checkNotifications() {
+    try {
+      await FCM.requestPermissions();
+      this.setState({ isNotificationsOn: true });
+    } catch (e) {
+      this.setState({ isNotificationsOn: false });
+    }
+  }
+
+  async handleNotifications(newValue) {
+    if (newValue) {
+      try {
+        await FCM.requestPermissions();
+        this.setState({ isNotificationsOn: true });
+      } catch (e) {
+        this.setState({ isNotificationsOn: false });
+        OpenAppSettings.open();
+      }
+    } else {
+      OpenAppSettings.open();
+    }
+  }
+
   share() {
     const options = {
       message: 'Read interesting stories in english',
@@ -133,7 +173,15 @@ class Settings extends Component {
                   }
                   backgroundColor={colors[this.props.theme].primary}
                   titleTextColor={colors[this.props.theme].text}
-                  cellAccessoryView={<Switch onTintColor={colors[this.props.theme].switch} />}
+                  cellAccessoryView={
+                    <Switch
+                      onTintColor={colors[this.props.theme].switch}
+                      value={this.state.isNotificationsOn}
+                      onValueChange={newValue => {
+                        this.handleNotifications(newValue);
+                      }}
+                    />
+                  }
                 />
               </Section>
               <Section

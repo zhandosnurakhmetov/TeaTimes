@@ -3,6 +3,8 @@ package com.teatimes;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.krazylabs.OpenAppSettingsPackage;
+import com.evollu.react.fcm.FIRMessagingPackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import guichaguri.trackplayer.TrackPlayer;
 import com.slowpath.actionsheet.ActionSheetPackage;
@@ -31,6 +33,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new OpenAppSettingsPackage(),
+            new FIRMessagingPackage(),
             new RNFetchBlobPackage(),
             new TrackPlayer(),
             new ActionSheetPackage(),

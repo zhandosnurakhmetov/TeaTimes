@@ -1,0 +1,6 @@
+framework module Pods_TeaTimes {
+  umbrella header "Pods-TeaTimes-umbrella.h"
+
+  export *
+  module * { export * }
+}

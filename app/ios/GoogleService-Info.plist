@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>589985448945-5v5b4paqgaecgmhnbp1r48dp0cvqib7o.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.589985448945-5v5b4paqgaecgmhnbp1r48dp0cvqib7o</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAfUhP_bjEvKm-46mcprTtWEUOGDfgntqs</string>
+	<key>GCM_SENDER_ID</key>
+	<string>589985448945</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.reactjs.native.TeaTimes</string>
+	<key>PROJECT_ID</key>
+	<string>teatimes-8d7cd</string>
+	<key>STORAGE_BUCKET</key>
+	<string>teatimes-8d7cd.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true></true>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false></false>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:589985448945:ios:ef6a730aede57538</string>
+	<key>DATABASE_URL</key>
+	<string>https://teatimes-8d7cd.firebaseio.com</string>
+</dict>
+</plist>

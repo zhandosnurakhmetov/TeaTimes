@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "589985448945",
+    "firebase_url": "https://teatimes-8d7cd.firebaseio.com",
+    "project_id": "teatimes-8d7cd",
+    "storage_bucket": "teatimes-8d7cd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:589985448945:android:0b8214434555d5b7",
+        "android_client_info": {
+          "package_name": "com.teatimes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "589985448945-4nlur2dvnl11mpte3o2sn9h2st90o2kk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBydxxE7Wi04NVNxhPn8LH4mjgyGBknK6Y"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

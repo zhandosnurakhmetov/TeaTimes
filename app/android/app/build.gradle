@@ -137,6 +137,9 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-app-settings')
+    compile project(':react-native-fcm')
+    compile 'com.google.firebase:firebase-core:10.0.1'
     compile project(':react-native-fetch-blob')
     compile project(':react-native-track-player')
     compile project(':react-native-actionsheet-native')
@@ -156,3 +159,5 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
+
+apply plugin: 'com.google.gms.google-services'
