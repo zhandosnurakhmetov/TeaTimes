@@ -20,7 +20,7 @@ class BooksCollectionView extends Component {
           showsHorizontalScrollIndicator={false}
           data={books}
           renderItem={this.renderItem}
-          keyExtractor={item => item.englishTitle}
+          keyExtractor={item => item.id}
         />
         <View style={styles(theme).seperator} />
       </View>
