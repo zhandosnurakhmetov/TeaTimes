@@ -3,6 +3,7 @@ import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ActionSheet from 'react-native-actionsheet-native';
+import Share from 'react-native-share';
 import constants from '../../constants';
 import { changeLanguage } from '../../actions';
 import { bookmarkPressed, isBookInFavorite } from '../../actions/bookmark';
@@ -42,6 +43,16 @@ class NavigationBar extends Component {
     );
   };
 
+  share() {
+    const shareOptions = {
+      message: 'Read interesting stories in english',
+      url: 'https://facebook.github.io/react-native/'
+    };
+    Share.open(shareOptions).catch(err => {
+      if (err) console.log(err);
+    });
+  }
+
   render() {
     const { selectedLanguage, book, iconColor } = this.props;
     return (
@@ -55,7 +66,17 @@ class NavigationBar extends Component {
               {selectedLanguage === '' ? 'EN' : selectedLanguage}
             </Text>
           </TouchableOpacity>
-          <Icon name="share" style={styles(iconColor).icon} size={25} color={iconColor} />
+          <TouchableOpacity>
+            <Icon
+              name="share"
+              style={styles(iconColor).icon}
+              size={25}
+              color={iconColor}
+              onPress={() => {
+                this.share();
+              }}
+            />
+          </TouchableOpacity>
           <TouchableOpacity
             onPress={() =>
               bookmarkPressed(book).then(isBookmarkSelected =>

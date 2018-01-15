@@ -90,11 +90,11 @@ export default class AudioPlayer extends Component {
         TrackPlayer.play();
       } else {
         TrackPlayer.reset();
-        const url = await DownloadManager.getUrl(this.state.book.id, this.state.book.audio);
+        const url = await DownloadManager.getUrl(this.state.book.id, this.state.book.audioUrl);
         const track = {
           url,
           id: this.state.book.id,
-          title: this.state.book.title,
+          title: this.props.title,
           artist: 'TeaTimes',
           artwork: 'https://facebook.github.io/react-native/docs/assets/favicon.png'
         };
@@ -104,11 +104,6 @@ export default class AudioPlayer extends Component {
     } catch (e) {
       console.log(e);
     }
-  }
-  currentTitle() {
-    if (this.state.currentTrack) return this.state.currentTrack.title;
-    if (this.state.book) return this.state.book.title;
-    return '';
   }
   render() {
     const { color, textColor, iconColor, onPressAudioTitle } = this.props;
@@ -131,7 +126,9 @@ export default class AudioPlayer extends Component {
           onPress={onPressAudioTitle}
           style={styles(color, textColor).textContainer}
         >
-          <Text style={styles(color, textColor).title}>{this.currentTitle()}</Text>
+          <Text style={styles(color, textColor).title} numberOfLines={2}>
+            {this.props.title}
+          </Text>
         </TouchableOpacity>
       </View>
     );
@@ -149,7 +146,7 @@ const styles = (color, textColor) =>
     },
     textContainer: {
       marginLeft: 20,
-      width: '100%',
+      width: '75%',
       height: '100%',
       justifyContent: 'center'
     },

@@ -130,11 +130,11 @@ class Player extends Component {
         TrackPlayer.play();
       } else {
         TrackPlayer.reset();
-        const url = await DownloadManager.getUrl(this.state.book.id, this.state.book.audio);
+        const url = await DownloadManager.getUrl(this.state.book.id, this.state.book.audioUrl);
         const track = {
           url,
           id: this.state.book.id,
-          title: this.state.book.title,
+          title: this.configure('Title'),
           artist: 'TeaTimes',
           artwork: 'https://facebook.github.io/react-native/docs/assets/favicon.png'
         };
@@ -173,7 +173,7 @@ class Player extends Component {
       this.setState({
         downloadState: 'LOADING'
       });
-      const res = await DownloadManager.download(this.state.book.id, this.state.book.audio);
+      const res = await DownloadManager.download(this.state.book.id, this.state.book.audioUrl);
       console.log('The file saved to ', res.path());
       this.setState({
         downloadState: 'LOADED'
@@ -182,16 +182,25 @@ class Player extends Component {
       console.log(e);
     }
   }
-  currentTitle() {
-    if (this.state.currentTrack) return this.state.currentTrack.title;
-    if (this.state.book) return this.state.book.title;
-    return '';
-  }
   currentDownloadState() {
     if (this.state.downloadState === 'LOADING') return '...';
     if (this.state.downloadState === 'LOADED') return 'Downloaded';
     return 'Download';
   }
+  configure = type => {
+    switch (this.props.selectedLanguage) {
+      case 'RU':
+        return this.props.navigation.state.params.book[`russian${type}`];
+      case 'KZ':
+        return this.props.navigation.state.params.book[`kazakh${type}`];
+      case 'EN':
+        return this.props.navigation.state.params.book[`english${type}`];
+      case 'TK':
+        return this.props.navigation.state.params.book[`turkish${type}`];
+      default:
+        return this.props.navigation.state.params.book[`english${type}`];
+    }
+  };
 
   render() {
     return (
@@ -205,7 +214,9 @@ class Player extends Component {
           </TouchableOpacity>
         </View>
         <View style={styles(this.props.theme).coverContainer}>
-          <Text style={styles(this.props.theme).cover}>{this.currentTitle()}</Text>
+          <Text style={styles(this.props.theme).cover} numberOfLines={4}>
+            {this.configure('Title')}
+          </Text>
         </View>
         <PlayerBar theme={this.props.theme} />
         <View style={styles(this.props.theme).playerContainer}>

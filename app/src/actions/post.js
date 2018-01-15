@@ -33,9 +33,7 @@ export const configureFavorites = books => dispatch => {
   const favorites = [];
 
   AsyncStorage.getAllKeys().then(keys => {
-    console.log('HERE I AM:', keys);
-
-    if (keys.length === 1) {
+    if (keys.length <= 1) {
       return dispatch({ type: FETCH_POSTS, posts: books });
     }
 

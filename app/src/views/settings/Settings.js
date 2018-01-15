@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import FCM from 'react-native-fcm';
 import OpenAppSettings from 'react-native-app-settings';
+import RNFetchBlob from 'react-native-fetch-blob';
 import {
   AppState,
   Text,
@@ -15,7 +16,6 @@ import {
 import { Cell, Section, TableView } from 'react-native-tableview-simple';
 import Picker from 'react-native-picker';
 import { connect } from 'react-redux';
-// import * as firebase from 'firebase';
 import Share from 'react-native-share';
 import Rate from 'react-native-rate';
 import Mailer from 'react-native-mail';
@@ -24,6 +24,7 @@ import Button from './Button';
 import { changeTheme, changeTextSize } from '../../actions';
 import { capitalizeFirstLetter } from '../../utils/StringHelper';
 
+const dirs = RNFetchBlob.fs.dirs;
 const { colors, fontWeight, background } = constants;
 
 class Settings extends Component {
@@ -74,23 +75,6 @@ class Settings extends Component {
     Share.open(options).catch(err => {
       if (err) console.log(err);
     });
-    // const postData = {
-    //   title: 'Some title',
-    //   type: 'Love',
-    //   subtype: 'Poem',
-    //   text: 'Some text about love'
-    // };
-    // const newPostKey = firebase
-    //   .database()
-    //   .ref()
-    //   .child('posts')
-    //   .push().key;
-    // const updates = {};
-    // updates[`/posts/${newPostKey}`] = postData;
-    // return firebase
-    //   .database()
-    //   .ref()
-    //   .update(updates);
   }
 
   rate() {
@@ -144,6 +128,14 @@ class Settings extends Component {
     Picker.show();
   }
 
+  async clearCache() {
+    try {
+      await RNFetchBlob.fs.unlink(`${dirs.DocumentDir}/audio`);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   render() {
     return (
       <ImageBackground
@@ -190,7 +182,7 @@ class Settings extends Component {
               >
                 <Cell
                   cellStyle="RightDetail"
-                  title="Text size"
+                  title="Text Size"
                   detail={this.props.textSize}
                   image={
                     <Icon
@@ -221,6 +213,23 @@ class Settings extends Component {
                   titleTextColor={colors[this.props.theme].text}
                   rightDetailColor={colors[this.props.theme].text}
                   onPress={this.selectTheme.bind(this)}
+                />
+                <Cell
+                  cellStyle="Basic"
+                  title="Clear Cache"
+                  detail={capitalizeFirstLetter(this.props.theme)}
+                  image={
+                    <Icon
+                      style={styles(this.props.theme).icon}
+                      name="cached"
+                      size={25}
+                      color={colors[this.props.theme].icon}
+                    />
+                  }
+                  backgroundColor={colors[this.props.theme].primary}
+                  titleTextColor={colors[this.props.theme].text}
+                  rightDetailColor={colors[this.props.theme].text}
+                  onPress={this.clearCache.bind(this)}
                 />
               </Section>
             </TableView>

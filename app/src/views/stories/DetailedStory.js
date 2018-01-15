@@ -34,30 +34,43 @@ class DetailedStory extends Component {
     this.props.navigation.navigate('Player', { book });
   }
 
-  render() {
+  renderAudioPlayer() {
     const { book } = this.props.navigation.state.params;
     const { theme } = this.props;
     const { contentColor, icon, primary } = colors[theme];
-    return (
-      <ImageBackground source={background[theme]} style={styles(contentColor).container}>
-        <NavigationBar navigation={this.props.navigation} book={book} iconColor={icon} />
-        <ScrollView>
-          <Text style={styles(contentColor).title}>{this.configure('Text')}</Text>
-          <Text style={styles(contentColor).title}>{this.configure('Title')}</Text>
-        </ScrollView>
+    if (book.audioUrl) {
+      return (
         <AudioPlayer
           color={primary}
           textColor={contentColor}
           iconColor={icon}
           onPressAudioTitle={this.onPressAudioTitle.bind(this)}
           book={book}
+          title={this.configure('Title')}
         />
+      );
+    }
+    return null;
+  }
+
+  render() {
+    const { book } = this.props.navigation.state.params;
+    const { theme, textSize } = this.props;
+    const { contentColor, icon } = colors[theme];
+    return (
+      <ImageBackground source={background[theme]} style={styles(contentColor, textSize).container}>
+        <NavigationBar navigation={this.props.navigation} book={book} iconColor={icon} />
+        <ScrollView>
+          <Text style={styles(contentColor, textSize).title}>{this.configure('Title')}</Text>
+          <Text style={styles(contentColor, textSize).text}>{this.configure('Text')}</Text>
+        </ScrollView>
+        {this.renderAudioPlayer()}
       </ImageBackground>
     );
   }
 }
 
-const styles = color =>
+const styles = (color, size) =>
   StyleSheet.create({
     container: {
       flex: 1
@@ -69,10 +82,12 @@ const styles = color =>
       fontWeight: fontWeight.heavy,
       textAlign: 'center',
       backgroundColor: 'transparent',
-      paddingTop: 20
+      paddingTop: 10,
+      paddingLeft: 10,
+      paddingRight: 10
     },
     text: {
-      fontSize: 17,
+      fontSize: size,
       color,
       fontFamily: 'Avenir',
       fontWeight: fontWeight.roman,
@@ -88,7 +103,8 @@ function mapStateToProps(state) {
   return {
     selectedLanguage: state.selectedLanguage,
     posts: state.posts,
-    theme: state.theme
+    theme: state.theme,
+    textSize: state.textSize
   };
 }
 

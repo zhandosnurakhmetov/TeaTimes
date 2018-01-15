@@ -5,11 +5,11 @@ const dirs = RNFetchBlob.fs.dirs;
 class DownloadManager {
   static download(id, url) {
     return RNFetchBlob.config({
-      path: `${dirs.DocumentDir}/${id}.mp3`
+      path: `${dirs.DocumentDir}/audio/${id}.mp3`
     }).fetch('GET', url, {});
   }
   static async getUrl(id, remoteUrl) {
-    const localUrl = `${dirs.DocumentDir}/${id}.mp3`;
+    const localUrl = `${dirs.DocumentDir}/audio/${id}.mp3`;
     const exists = await RNFetchBlob.fs.exists(localUrl);
     let url = remoteUrl;
     if (exists) url = `file://${localUrl}`;
@@ -17,7 +17,7 @@ class DownloadManager {
   }
   static async exists(id) {
     if (!id) return false;
-    const localUrl = `${dirs.DocumentDir}/${id}.mp3`;
+    const localUrl = `${dirs.DocumentDir}/audio/${id}.mp3`;
     const exists = await RNFetchBlob.fs.exists(localUrl);
     return exists;
   }

@@ -17,11 +17,11 @@ class BookCover extends Component {
     const type = book.subtype;
     const coverColor = cover[type];
 
-    console.log(colors[theme].text);
-
     return (
       <TouchableOpacity style={styles(theme, coverColor).container} onPress={this.didSelectItem}>
-        <Text style={styles(theme, coverColor).title}>{this.props.book.russianTitle}</Text>
+        <Text style={styles(theme, coverColor).title} numberOfLines={4}>
+          {this.props.book.englishTitle}
+        </Text>
       </TouchableOpacity>
     );
   }
