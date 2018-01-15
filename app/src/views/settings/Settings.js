@@ -79,8 +79,8 @@ class Settings extends Component {
 
   rate() {
     const options = {
-      AppleAppID: '447188370',
-      GooglePackageName: 'com.snapchat.android',
+      AppleAppID: '1335570406',
+      GooglePackageName: 'com.teatimes',
       preferInApp: true
     };
     Rate.rate(options, () => {});
