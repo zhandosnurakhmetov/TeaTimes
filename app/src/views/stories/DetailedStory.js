@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ImageBackground, StyleSheet, Text, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-
+import TrackPlayer from 'react-native-track-player';
 import constants from '../../constants';
 import AudioPlayer from './AudioPlayer';
 import NavigationBar from './NavigationBar';
@@ -11,6 +11,7 @@ const { fontWeight, background, colors } = constants;
 
 class DetailedStory extends Component {
   componentWillUnmount() {
+    TrackPlayer.pause();
     this.props.fetchPosts();
   }
 
