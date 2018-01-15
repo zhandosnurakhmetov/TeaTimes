@@ -89,7 +89,7 @@ class Settings extends Component {
   sendEmail = () => {
     Mailer.mail(
       {
-        subject: 'Connecting through mobile application',
+        subject: 'TeaTimes',
         recipients: ['malikaburakoja@gmail.com'],
         body: 'Hello Malika!',
         isHTML: false
