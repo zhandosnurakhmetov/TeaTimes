@@ -69,8 +69,8 @@ class Settings extends Component {
 
   share() {
     const options = {
-      message: 'Read interesting stories in english',
-      url: 'https://facebook.github.io/react-native/'
+      message: 'Read and listen interesting stories in english, turkish, russian and kazakh. ',
+      url: 'https://teatimes.app.link'
     };
     Share.open(options).catch(err => {
       if (err) console.log(err);

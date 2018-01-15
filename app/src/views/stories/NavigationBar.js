@@ -45,8 +45,8 @@ class NavigationBar extends Component {
 
   share() {
     const shareOptions = {
-      message: 'Read interesting stories in english',
-      url: 'https://facebook.github.io/react-native/'
+      message: `Read and listen "${this.props.title}" in english, turkish, russian and kazakh. `,
+      url: 'https://teatimes.app.link'
     };
     Share.open(shareOptions).catch(err => {
       if (err) console.log(err);

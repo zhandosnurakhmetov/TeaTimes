@@ -158,8 +158,10 @@ class Player extends Component {
   }
   share() {
     const options = {
-      message: 'Read interesting stories in english',
-      url: 'https://facebook.github.io/react-native/'
+      message: `Read and listen "${this.configure(
+        'Title'
+      )}" in english, turkish, russian and kazakh. `,
+      url: 'https://teatimes.app.link'
     };
     Share.open(options).catch(err => {
       if (err) console.log(err);
@@ -252,7 +254,10 @@ class Player extends Component {
               {this.currentDownloadState()}
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={this.share} style={{ width: 56, alignItems: 'center' }}>
+          <TouchableOpacity
+            onPress={this.share.bind(this)}
+            style={{ width: 56, alignItems: 'center' }}
+          >
             <Icon name="share" size={35} color={colors[this.props.theme].icon} />
           </TouchableOpacity>
         </View>

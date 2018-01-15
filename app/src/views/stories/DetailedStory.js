@@ -59,7 +59,12 @@ class DetailedStory extends Component {
     const { contentColor, icon } = colors[theme];
     return (
       <ImageBackground source={background[theme]} style={styles(contentColor, textSize).container}>
-        <NavigationBar navigation={this.props.navigation} book={book} iconColor={icon} />
+        <NavigationBar
+          navigation={this.props.navigation}
+          book={book}
+          iconColor={icon}
+          title={this.configure('Title')}
+        />
         <ScrollView>
           <Text style={styles(contentColor, textSize).title}>{this.configure('Title')}</Text>
           <Text style={styles(contentColor, textSize).text}>{this.configure('Text')}</Text>
