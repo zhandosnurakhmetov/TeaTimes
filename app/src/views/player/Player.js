@@ -185,11 +185,6 @@ class Player extends Component {
       console.log(e);
     }
   }
-  currentDownloadState() {
-    if (this.state.downloadState === 'LOADING') return '...';
-    if (this.state.downloadState === 'LOADED') return 'Downloaded';
-    return 'Download';
-  }
   configure = type => {
     switch (this.props.selectedLanguage) {
       case 'RU':
@@ -246,15 +241,6 @@ class Player extends Component {
           <TouchableOpacity onPress={this.speed.bind(this)}>
             <Text style={styles(this.props.theme).speed}>{this.state.rate}x</Text>
           </TouchableOpacity>
-          {/* <TouchableOpacity
-            onPress={this.download.bind(this)}
-            style={styles(this.props.theme).download}
-            disabled={this.state.downloadState !== 'NOT_LOADED'}
-          >
-            <Text style={styles(this.props.theme).downloadTitle}>
-              {this.currentDownloadState()}
-            </Text>
-          </TouchableOpacity> */}
           <ButtonComponent
             type="custom"
             buttonState={this.state.downloadState}

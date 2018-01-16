@@ -11,7 +11,8 @@ import {
   ImageBackground,
   StyleSheet,
   ScrollView,
-  Switch
+  Switch,
+  Alert
 } from 'react-native';
 import { Cell, Section, TableView } from 'react-native-tableview-simple';
 import Picker from 'react-native-picker';
@@ -136,6 +137,15 @@ class Settings extends Component {
     }
   }
 
+  confirmClearCache() {
+    Alert.alert(
+      'Are you sure?',
+      'All downloaded audio files will be removed.',
+      [{ text: 'Cancel' }, { text: 'OK', onPress: () => this.clearCache() }],
+      { cancelable: false }
+    );
+  }
+
   render() {
     return (
       <ImageBackground
@@ -229,7 +239,7 @@ class Settings extends Component {
                   backgroundColor={colors[this.props.theme].primary}
                   titleTextColor={colors[this.props.theme].text}
                   rightDetailColor={colors[this.props.theme].text}
-                  onPress={this.clearCache.bind(this)}
+                  onPress={this.confirmClearCache.bind(this)}
                 />
               </Section>
             </TableView>
