@@ -66,7 +66,7 @@ export default class App extends Component {
       </Provider>
     ) : (
       <View style={styles.container}>
-        <ActivityIndicator color="black" animating={!reduxLoaded} size="large" />
+        {/* <ActivityIndicator color="black" animating={!reduxLoaded} size="large" /> */}
       </View>
     );
   }

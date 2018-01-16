@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { ImageBackground, StyleSheet, FlatList, Text } from 'react-native';
+import { ImageBackground, StyleSheet, FlatList } from 'react-native';
 import { connect } from 'react-redux';
+import ButtonComponent from 'react-native-button-component';
 import BooksCollectionView from './BooksCollectionView';
 import { fetchPosts } from '../../actions';
 import constants from '../../constants';
 
-const { background } = constants;
+const { colors, fontWeight, background } = constants;
 
 class Stories extends Component {
   componentDidMount() {
@@ -21,13 +22,30 @@ class Stories extends Component {
   render() {
     const { theme, posts } = this.props;
     if (posts.length === 0) {
-      return <Text style={styles.loader}>Loading...</Text>;
+      return (
+        <ImageBackground source={background[theme]} style={styles(theme).container}>
+          <ButtonComponent
+            type="custom"
+            buttonState="loading"
+            shape="rectange"
+            style={styles(theme).loading}
+            textStyle={styles(theme).loadingTitle}
+            states={{
+              loading: {
+                spinner: true,
+                spinnerColor: colors[theme].text,
+                text: 'Loading'
+              }
+            }}
+          />
+        </ImageBackground>
+      );
     }
 
     console.log(posts);
 
     return (
-      <ImageBackground source={background[theme]} style={styles.container}>
+      <ImageBackground source={background[theme]} style={styles(theme).container}>
         <FlatList
           data={posts.map(item => item.type)}
           renderItem={this.renderItem}
@@ -38,11 +56,22 @@ class Stories extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  }
-});
+const styles = currentTheme =>
+  StyleSheet.create({
+    container: {
+      flex: 1
+    },
+    loading: {
+      height: '100%'
+    },
+    loadingTitle: {
+      letterSpacing: 0,
+      fontFamily: 'Avenir',
+      fontSize: 12,
+      fontWeight: fontWeight.heavy,
+      color: colors[currentTheme].text
+    }
+  });
 
 function mapStateToProps(state) {
   return {
