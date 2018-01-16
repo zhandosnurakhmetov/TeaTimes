@@ -270,6 +270,7 @@ class Player extends Component {
               },
               LOADING: {
                 spinner: true,
+                spinnerSize: 25,
                 spinnerColor: colors[this.props.theme].text,
                 text: 'Downloading'
               },
@@ -346,8 +347,6 @@ const styles = currentTheme =>
       alignItems: 'center',
       justifyContent: 'center',
       width: 120,
-      paddingTop: 6,
-      paddingBottom: 6,
       paddingLeft: 16,
       paddingRight: 16
     },
