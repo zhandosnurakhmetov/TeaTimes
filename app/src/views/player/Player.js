@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import TrackPlayer from 'react-native-track-player';
 import EventEmitter from 'react-native-eventemitter';
 import Share from 'react-native-share';
+import ButtonComponent from 'react-native-button-component';
 import constants from '../../constants';
 import { changeTheme } from '../../actions';
 import PlayerBar from './PlayerBar';
@@ -245,7 +246,7 @@ class Player extends Component {
           <TouchableOpacity onPress={this.speed.bind(this)}>
             <Text style={styles(this.props.theme).speed}>{this.state.rate}x</Text>
           </TouchableOpacity>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={this.download.bind(this)}
             style={styles(this.props.theme).download}
             disabled={this.state.downloadState !== 'NOT_LOADED'}
@@ -253,7 +254,30 @@ class Player extends Component {
             <Text style={styles(this.props.theme).downloadTitle}>
               {this.currentDownloadState()}
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
+          <ButtonComponent
+            type="custom"
+            buttonState={this.state.downloadState}
+            shape="rectange"
+            style={styles(this.props.theme).download}
+            textStyle={styles(this.props.theme).downloadTitle}
+            states={{
+              NOT_LOADED: {
+                onPress: () => {
+                  this.download();
+                },
+                text: 'Download'
+              },
+              LOADING: {
+                spinner: true,
+                spinnerColor: colors[this.props.theme].text,
+                text: 'Downloading'
+              },
+              LOADED: {
+                text: 'Downloaded'
+              }
+            }}
+          />
           <TouchableOpacity
             onPress={this.share.bind(this)}
             style={{ width: 56, alignItems: 'center' }}
@@ -328,6 +352,7 @@ const styles = currentTheme =>
       paddingRight: 16
     },
     downloadTitle: {
+      letterSpacing: 0,
       fontFamily: 'Avenir',
       fontSize: 12,
       fontWeight: fontWeight.heavy,

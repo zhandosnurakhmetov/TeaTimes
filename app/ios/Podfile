@@ -14,6 +14,10 @@ target 'TeaTimes' do
 #    # Pods for testing
 #  end
 
+  pod 'react-native-spinkit', :path => '../node_modules/react-native-spinkit'
+
+  pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
+
   target 'TeaTimesTests' do
     inherit! :search_paths
     # Pods for testing
