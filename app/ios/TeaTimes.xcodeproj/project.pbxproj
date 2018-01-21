@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -480,6 +479,7 @@
 		83EA09CCE14C4F00A6D89DBC /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		8844F2821DDB4CDE9C7C908A /* RNRate.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNRate.xcodeproj; path = "../node_modules/react-native-rate/ios/RNRate.xcodeproj"; sourceTree = "<group>"; };
 		930F5F1F200CEF610074EE9D /* RNSpinkit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSpinkit.xcodeproj; path = "../node_modules/react-native-spinkit/ios/RNSpinkit.xcodeproj"; sourceTree = "<group>"; };
+		931DF2D120148B930052110E /* React.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = React.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		934D2F7B200CE61500D9EE7F /* ART.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ART.xcodeproj; path = "../node_modules/react-native/Libraries/ART/ART.xcodeproj"; sourceTree = "<group>"; };
 		93A72AB2200B4B0500D3B65E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		93A72AF4200B4BE500D3B65E /* TeaTimes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = TeaTimes.entitlements; path = TeaTimes/TeaTimes.entitlements; sourceTree = "<group>"; };
@@ -915,6 +915,7 @@
 		93AB10891FF4F6F2000AC1C2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				931DF2D120148B930052110E /* React.framework */,
 				930F5F1F200CEF610074EE9D /* RNSpinkit.xcodeproj */,
 				934D2F7B200CE61500D9EE7F /* ART.xcodeproj */,
 				93AB10B51FF4F6F2000AC1C2 /* CoreAudio.framework */,

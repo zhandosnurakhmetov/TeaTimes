@@ -299,7 +299,7 @@ arrify@^1.0.0, arrify@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/arrify/-/arrify-1.0.1.tgz#898508da2226f380df904728456849c1501a4b0d"
 
-art@^0.10.0:
+art@^0.10.0, art@^0.10.1:
   version "0.10.1"
   resolved "https://registry.yarnpkg.com/art/-/art-0.10.1.tgz#38541883e399225c5e193ff246e8f157cf7b2146"
 
@@ -4356,21 +4356,22 @@ react-native-app-settings@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-native-app-settings/-/react-native-app-settings-2.0.0.tgz#d2dbcf88dbb40d7261599fc373b35bd0f9fd886e"
 
-react-native-button-component@^0.1.25:
+"react-native-button-component@github:yogeverez/react-native-button-component":
   version "0.1.25"
-  resolved "https://registry.yarnpkg.com/react-native-button-component/-/react-native-button-component-0.1.25.tgz#d7faeafb21ba3522e4ce20fc642c1372a387e423"
+  resolved "https://codeload.github.com/yogeverez/react-native-button-component/tar.gz/c8e6013509aab28887cc357b94612dff7f9b3f71"
   dependencies:
     babel-preset-react-native-stage-0 "^1.0.1"
     lodash "^4.17.2"
-    react-native-circular-progress cconstantinescu/react-native-circular-progress
+    react-native-circular-progress bgryszko/react-native-circular-progress
     react-native-linear-gradient "^2.0.0"
     react-native-spinkit "^1.0.2"
 
-react-native-circular-progress@cconstantinescu/react-native-circular-progress:
-  version "0.0.8"
-  resolved "https://codeload.github.com/cconstantinescu/react-native-circular-progress/tar.gz/22587158f6abcac9d6cadf60fdd92bfd9a5f10a9"
+react-native-circular-progress@bgryszko/react-native-circular-progress:
+  version "0.1.2"
+  resolved "https://codeload.github.com/bgryszko/react-native-circular-progress/tar.gz/454048bd92a166b876d53ea227c6cff2cc43c41a"
   dependencies:
-    art "^0.10.0"
+    art "^0.10.1"
+    prop-types "^15.6.0"
 
 react-native-dismiss-keyboard@1.0.0:
   version "1.0.0"
@@ -4431,7 +4432,7 @@ react-native-share@^1.0.23:
   version "1.0.23"
   resolved "https://registry.yarnpkg.com/react-native-share/-/react-native-share-1.0.23.tgz#6476f10d34e5274b9e0ef2c93def6c3a282ffe94"
 
-react-native-spinkit@^1.0.2:
+react-native-spinkit@^1.0.2, react-native-spinkit@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/react-native-spinkit/-/react-native-spinkit-1.1.1.tgz#3ae512f3978bc750b7c02639911e1710750d8539"
   dependencies:
